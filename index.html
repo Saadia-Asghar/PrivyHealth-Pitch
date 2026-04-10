@@ -6,426 +6,578 @@
   <title>PrivyHealth Pakistan — Pitch Deck</title>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html, body { width: 100%; height: 100%; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #111; color: #fff; overflow: hidden; }
-
+    html, body { width: 100%; height: 100%; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #0d0d0d; color: #fff; overflow: hidden; }
     #app { width: 100%; height: 100%; display: flex; flex-direction: column; }
 
-    /* ── Top bar ── */
+    /* ── Topbar ── */
     #topbar {
-      flex-shrink: 0;
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 10px 20px; background: #1a1a1a; border-bottom: 1px solid #2a2a2a;
-      gap: 12px; flex-wrap: wrap;
+      flex-shrink: 0; display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+      padding: 9px 18px; background: #141414; border-bottom: 1px solid #252525;
     }
-    .brand { font-weight: 800; font-size: 15px; color: #10b981; white-space: nowrap; }
-    .hint  { font-size: 11px; color: #555; white-space: nowrap; }
-    #tabs { display: flex; gap: 4px; flex-wrap: wrap; }
+    .brand { font-weight: 800; font-size: 14px; color: #10b981; white-space: nowrap; margin-right: 4px; }
+    #tabs { display: flex; gap: 3px; flex-wrap: wrap; flex: 1; }
     #tabs button {
-      padding: 5px 12px; border-radius: 6px; border: 1px solid #333;
-      background: transparent; color: #888; font-size: 12px; cursor: pointer; transition: all .15s;
+      padding: 4px 10px; border-radius: 6px; border: 1px solid #2a2a2a;
+      background: transparent; color: #666; font-size: 11px; cursor: pointer; transition: all .15s; white-space: nowrap;
     }
-    #tabs button:hover { background: #222; color: #ccc; }
+    #tabs button:hover { background: #1e1e1e; color: #aaa; }
     #tabs button.active { background: #10b981; border-color: #10b981; color: #fff; font-weight: 700; }
-    #nav { display: flex; gap: 6px; align-items: center; }
+    #nav { display: flex; gap: 5px; align-items: center; flex-shrink: 0; }
     #nav button {
-      width: 32px; height: 32px; border-radius: 8px; border: 1px solid #333;
-      background: #222; color: #ccc; font-size: 16px; cursor: pointer;
+      width: 30px; height: 30px; border-radius: 7px; border: 1px solid #2a2a2a;
+      background: #1e1e1e; color: #ccc; font-size: 14px; cursor: pointer;
       display: flex; align-items: center; justify-content: center; transition: all .15s;
     }
-    #nav button:hover:not(:disabled) { background: #333; }
+    #nav button:hover:not(:disabled) { background: #2a2a2a; }
     #nav button:disabled { opacity: .3; cursor: default; }
-    #counter { font-size: 12px; color: #555; min-width: 40px; text-align: center; }
-    #fsBtn {
-      padding: 6px 14px; border-radius: 8px; border: 1px solid #10b981;
-      background: transparent; color: #10b981; font-size: 12px; font-weight: 700;
-      cursor: pointer; transition: all .15s; white-space: nowrap;
-    }
-    #fsBtn:hover { background: rgba(16,185,129,.12); }
+    #counter { font-size: 11px; color: #555; min-width: 38px; text-align: center; }
+    #fsBtn { padding: 5px 12px; border-radius: 7px; border: 1px solid #10b981; background: transparent; color: #10b981; font-size: 11px; font-weight: 700; cursor: pointer; white-space: nowrap; }
+    #fsBtn:hover { background: rgba(16,185,129,.1); }
+    .hint { font-size: 10px; color: #444; white-space: nowrap; }
 
     /* ── Slide container ── */
-    #wrap {
-      flex: 1;
-      min-height: 0;      /* critical: lets flex child shrink */
-      position: relative;
-      overflow: hidden;
-    }
-
-    /* ── Every slide: absolutely fills #wrap ── */
+    #wrap { flex: 1; min-height: 0; position: relative; overflow: hidden; }
     .slide {
-      position: absolute !important;   /* !important beats per-slide overrides */
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      overflow: hidden;
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity .25s ease;
+      position: absolute !important;
+      top: 0; left: 0; width: 100%; height: 100%; overflow: hidden;
+      opacity: 0; pointer-events: none; transition: opacity .22s ease;
     }
     .slide.active { opacity: 1; pointer-events: auto; }
 
-    /* ──────────────────────────────────────────
-       SLIDE 1 · Title (dark green)
-    ────────────────────────────────────────── */
-    .s1 {
-      background: linear-gradient(135deg,#0c4a3f 0%,#064e3b 40%,#022c22 100%);
-      display: flex; flex-direction: column; justify-content: center;
-      align-items: flex-start; padding: 8vh 10vw;
-    }
-    .s1 .orb1 { position: absolute; top: 10%; right: 8%; width: 38vw; height: 38vw; border-radius: 50%; background: rgba(22,163,74,.08); }
-    .s1 .orb2 { position: absolute; bottom:-5%; right:20%; width: 22vw; height: 22vw; border-radius: 50%; background: rgba(52,211,153,.07); }
-    .s1-logo { display: flex; align-items: center; gap: 10px; margin-bottom: 3vh; }
-    .s1-dot  { width: clamp(24px,2.5vw,40px); height: clamp(24px,2.5vw,40px); background: #10b981; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
-    .s1-dot svg { width: 55%; height: 55%; }
-    .s1-brand { font-size: clamp(12px,1.3vw,20px); font-weight: 700; color: #10b981; letter-spacing: .08em; text-transform: uppercase; }
-    .s1-h1  { font-size: clamp(30px,5.5vw,80px); font-weight: 900; color: #fff; line-height: 1.08; margin-bottom: 2.5vh; letter-spacing: -.02em; max-width: 70%; }
-    .s1-h1 span { color: #10b981; }
-    .s1-sub { font-size: clamp(12px,1.6vw,22px); color: rgba(255,255,255,.72); max-width: 55%; line-height: 1.6; margin-bottom: 4vh; }
-    .s1-badge { background: rgba(16,185,129,.15); border: 1px solid rgba(16,185,129,.4); border-radius: 100px; padding: 8px 20px; display: inline-block; }
-    .s1-badge span { font-size: clamp(11px,1.2vw,16px); color: #10b981; font-weight: 700; }
-    .s1-stats { position: absolute; right: 8vw; top: 50%; transform: translateY(-50%); display: flex; flex-direction: column; gap: 2vh; }
-    .s1-stat { background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.1); border-radius: 1vw; padding: 1.5vh 2vw; text-align: center; min-width: 12vw; }
-    .s1-stat-n { font-size: clamp(14px,1.8vw,26px); font-weight: 800; color: #10b981; }
-    .s1-stat-l { font-size: clamp(9px,.9vw,13px); color: rgba(255,255,255,.5); margin-top: 4px; }
+    /* ── Shared helpers ── */
+    .lbl { font-size: clamp(9px,.9vw,13px); font-weight: 700; text-transform: uppercase; letter-spacing: .12em; margin-bottom: 1.5vh; }
+    .head { font-size: clamp(20px,3.2vw,50px); font-weight: 900; line-height: 1.1; margin-bottom: 3vh; letter-spacing: -.02em; }
+    .green { color: #10b981; }
+    .red   { color: #dc2626; }
+    .blue  { color: #2563eb; }
+    .purple{ color: #7c3aed; }
+    .amber { color: #d97706; }
+    .card  { border-radius: 1vw; padding: 2.2vh 2vw; }
 
-    /* ──────────────────────────────────────────
-       SLIDE 2 · Problem (white)
-    ────────────────────────────────────────── */
-    .s2 {
-      background: #fafaf9; color: #111;
-      display: flex; flex-direction: column; justify-content: center;
-      padding: 7vh 8vw;
-    }
-    /* red left bar via inset box-shadow so no pseudo-element positioning needed */
-    .s2 { box-shadow: inset 6px 0 0 #dc2626; }
-    .s2-lbl  { font-size: clamp(10px,1vw,14px); font-weight: 700; color: #dc2626; text-transform: uppercase; letter-spacing: .12em; margin-bottom: 2vh; }
-    .s2-h2   { font-size: clamp(22px,3.8vw,56px); font-weight: 900; color: #111; line-height: 1.1; margin-bottom: 4vh; letter-spacing: -.02em; }
-    .s2-h2 span { color: #dc2626; }
+    /* ═══════════════════════════════════════
+       SLIDE 1 · TITLE
+    ═══════════════════════════════════════ */
+    .s1 { background: linear-gradient(135deg,#0a2e24 0%,#064e3b 50%,#022c22 100%); display: flex; flex-direction: column; justify-content: center; align-items: flex-start; padding: 8vh 10vw; }
+    .s1 .orb1 { position: absolute; top: 8%; right: 6%; width: 36vw; height: 36vw; border-radius: 50%; background: radial-gradient(circle, rgba(16,185,129,.13) 0%, transparent 70%); }
+    .s1 .orb2 { position: absolute; bottom:-8%; right:22%; width: 20vw; height: 20vw; border-radius: 50%; background: rgba(52,211,153,.06); }
+    .s1-logo { display: flex; align-items: center; gap: 10px; margin-bottom: 2.5vh; }
+    .s1-dot { width: clamp(22px,2.2vw,36px); height: clamp(22px,2.2vw,36px); background: #10b981; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+    .s1-dot svg { width: 55%; height: 55%; }
+    .s1-brand { font-size: clamp(11px,1.2vw,18px); font-weight: 700; color: #10b981; letter-spacing: .08em; text-transform: uppercase; }
+    .s1-h1 { font-size: clamp(28px,5vw,76px); font-weight: 900; color: #fff; line-height: 1.08; margin-bottom: 2.5vh; letter-spacing: -.02em; max-width: 65%; }
+    .s1-h1 span { color: #10b981; }
+    .s1-sub { font-size: clamp(12px,1.5vw,21px); color: rgba(255,255,255,.68); max-width: 55%; line-height: 1.65; margin-bottom: 3.5vh; }
+    .s1-badges { display: flex; gap: 1.2vw; flex-wrap: wrap; }
+    .s1-badge { background: rgba(16,185,129,.14); border: 1px solid rgba(16,185,129,.35); border-radius: 100px; padding: 7px 18px; }
+    .s1-badge span { font-size: clamp(10px,1.1vw,15px); color: #10b981; font-weight: 700; }
+    .s1-stats { position: absolute; right: 7vw; top: 50%; transform: translateY(-50%); display: flex; flex-direction: column; gap: 1.5vh; }
+    .s1-stat { background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.09); border-radius: 1vw; padding: 1.5vh 2vw; text-align: center; min-width: 11vw; }
+    .s1-stat-n { font-size: clamp(13px,1.6vw,24px); font-weight: 800; color: #10b981; }
+    .s1-stat-l { font-size: clamp(8px,.85vw,12px); color: rgba(255,255,255,.45); margin-top: 3px; }
+
+    /* ═══════════════════════════════════════
+       SLIDE 2 · PROBLEM
+    ═══════════════════════════════════════ */
+    .s2 { background: #fafafa; color: #111; display: flex; flex-direction: column; justify-content: center; padding: 7vh 8vw; box-shadow: inset 6px 0 0 #dc2626; }
+    .s2 .lbl { color: #dc2626; }
+    .s2 .head span { color: #dc2626; }
     .s2-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 2vw; }
     .s2-card { border-radius: 1.2vw; padding: 3vh 2.5vw; }
     .s2-stat { font-size: clamp(22px,3.8vw,58px); font-weight: 900; line-height: 1; margin-bottom: 1.5vh; }
-    .s2-title{ font-size: clamp(12px,1.3vw,18px); font-weight: 700; color: #111; margin-bottom: 1vh; line-height: 1.3; }
-    .s2-det  { font-size: clamp(10px,1.1vw,15px); color: #555; line-height: 1.5; }
+    .s2-title { font-size: clamp(12px,1.3vw,18px); font-weight: 700; color: #111; margin-bottom: .8vh; line-height: 1.3; }
+    .s2-det   { font-size: clamp(10px,1.1vw,15px); color: #555; line-height: 1.5; }
 
-    /* ──────────────────────────────────────────
-       SLIDE 3 · Solution (dark green)
-    ────────────────────────────────────────── */
-    .s3 {
-      background: linear-gradient(160deg,#064e3b 0%,#0c4a3f 100%);
-      display: flex; flex-direction: column; justify-content: center;
-      padding: 7vh 8vw;
-    }
-    .s3 .orb { position: absolute; bottom:-8vh; right:-5vw; width: 40vw; height: 40vw; border-radius: 50%; background: rgba(16,185,129,.06); }
-    .s3-lbl  { font-size: clamp(10px,1vw,14px); font-weight: 700; color: #10b981; text-transform: uppercase; letter-spacing: .12em; margin-bottom: 2vh; }
-    .s3-h2   { font-size: clamp(20px,3.5vw,52px); font-weight: 900; color: #fff; line-height: 1.1; margin-bottom: 4vh; letter-spacing: -.02em; max-width: 65%; }
-    .s3-h2 span { color: #10b981; }
-    .s3-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2.5vw; max-width: 85%; }
-    .s3-card { background: rgba(255,255,255,.07); border: 1px solid rgba(255,255,255,.12); border-radius: 1vw; padding: 2.5vh 2vw; }
-    .s3-icon { font-size: clamp(15px,1.8vw,28px); font-weight: 900; color: #10b981; margin-bottom: 1vh; font-family: monospace; }
-    .s3-title{ font-size: clamp(12px,1.3vw,18px); font-weight: 700; color: #fff; margin-bottom: .8vh; }
-    .s3-desc { font-size: clamp(10px,1.1vw,15px); color: rgba(255,255,255,.65); line-height: 1.5; }
+    /* ═══════════════════════════════════════
+       SLIDE 3 · FULL PLATFORM MAP
+    ═══════════════════════════════════════ */
+    .s3 { background: #111; display: flex; flex-direction: column; justify-content: center; padding: 6vh 8vw; }
+    .s3 .lbl { color: #10b981; }
+    .s3 .head { color: #fff; max-width: 80%; }
+    .s3 .head span { color: #10b981; }
+    .s3-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 1.8vw; }
+    .s3-col { border-radius: 1vw; padding: 2.2vh 1.8vw; display: flex; flex-direction: column; gap: 1.1vh; }
+    .s3-col-head { font-size: clamp(13px,1.4vw,20px); font-weight: 800; margin-bottom: .6vh; }
+    .s3-col-sub  { font-size: clamp(9px,1vw,14px); line-height: 1.45; }
+    .s3-feat { display: flex; align-items: flex-start; gap: .5vw; font-size: clamp(10px,1.05vw,14px); line-height: 1.4; }
+    .s3-feat span { font-weight: 700; flex-shrink: 0; }
 
-    /* ──────────────────────────────────────────
-       SLIDE 4 · How It Works (light grey)
-    ────────────────────────────────────────── */
-    .s4 {
-      background: #f8f9fa; color: #111;
-      display: flex; flex-direction: column; justify-content: center;
-      padding: 6vh 8vw;
-    }
-    .s4-lbl  { font-size: clamp(10px,1vw,14px); font-weight: 700; color: #0f5b34; text-transform: uppercase; letter-spacing: .12em; margin-bottom: 1.5vh; }
-    .s4-h2   { font-size: clamp(18px,3vw,46px); font-weight: 900; color: #111; line-height: 1.15; margin-bottom: 4vh; letter-spacing: -.02em; }
-    .s4-h2 span { color: #0f5b34; }
-    .s4-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 1.5vw; position: relative; }
-    .s4-line { position: absolute; top: 3.5vh; left: 5%; right: 5%; height: 2px; background: linear-gradient(90deg,#2563eb,#7c3aed,#0f5b34,#d97706); z-index: 0; }
-    .s4-card { border-radius: 1.2vw; padding: 2.5vh 1.8vw; position: relative; z-index: 1; }
-    .s4-num  { width: 4vh; height: 4vh; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-bottom: 2vh; }
-    .s4-num span { font-size: clamp(9px,1vw,14px); font-weight: 800; color: #fff; }
-    .s4-actor{ font-size: clamp(9px,1vw,14px); font-weight: 800; text-transform: uppercase; letter-spacing: .06em; margin-bottom: .8vh; }
-    .s4-act  { font-size: clamp(11px,1.25vw,17px); font-weight: 700; color: #111; margin-bottom: 1vh; line-height: 1.3; }
-    .s4-det  { font-size: clamp(10px,1.05vw,14px); color: #555; line-height: 1.5; }
+    /* ═══════════════════════════════════════
+       SLIDE 4 · PATIENT FEATURES
+    ═══════════════════════════════════════ */
+    .s4 { background: #f0fdf4; color: #111; display: flex; gap: 5vw; padding: 6vh 8vw; }
+    .s4-l { flex: 1; display: flex; flex-direction: column; justify-content: center; }
+    .s4-l .lbl { color: #0f5b34; }
+    .s4-l .head span { color: #0f5b34; }
+    .s4-r { flex: 1.1; display: flex; flex-direction: column; justify-content: center; gap: 1.5vh; }
+    .f-card { border-radius: 1vw; padding: 1.8vh 2vw; display: flex; gap: 1.2vw; align-items: flex-start; }
+    .f-icon { font-size: clamp(14px,1.5vw,22px); flex-shrink: 0; margin-top: 1px; }
+    .f-title { font-size: clamp(12px,1.25vw,18px); font-weight: 700; margin-bottom: 3px; }
+    .f-desc  { font-size: clamp(10px,1.05vw,14px); color: #555; line-height: 1.45; }
 
-    /* ──────────────────────────────────────────
-       SLIDE 5 · Pharmacy Tiers (white)
-    ────────────────────────────────────────── */
-    .s5 {
-      background: #fff; color: #111;
-      display: flex; padding: 6vh 8vw; gap: 6vw;
-    }
-    .s5-l    { flex: 1; display: flex; flex-direction: column; justify-content: center; }
-    .s5-lbl  { font-size: clamp(10px,1vw,14px); font-weight: 700; color: #d97706; text-transform: uppercase; letter-spacing: .12em; margin-bottom: 1.5vh; }
-    .s5-h2   { font-size: clamp(20px,3.2vw,48px); font-weight: 900; color: #111; line-height: 1.1; margin-bottom: 2vh; letter-spacing: -.02em; }
-    .s5-h2 span { color: #0f5b34; }
-    .s5-p    { font-size: clamp(12px,1.3vw,18px); color: #555; line-height: 1.6; max-width: 90%; }
-    .s5-r    { flex: 1; display: flex; flex-direction: column; justify-content: center; gap: 2vh; }
-    .s5-tier { border-radius: 1vw; padding: 2vh 2vw; display: flex; gap: 1.5vw; align-items: flex-start; }
-    .s5-dot  { width: 3.5vh; height: 3.5vh; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 2px; }
-    .s5-dot span { font-size: clamp(10px,1.1vw,15px); color: #fff; font-weight: 900; }
-    .s5-name { font-size: clamp(13px,1.4vw,20px); font-weight: 800; }
-    .s5-range{ font-size: clamp(10px,1vw,14px); color: #777; font-weight: 600; margin-left: 12px; }
-    .s5-perks{ display: flex; gap: 1.5vw; flex-wrap: wrap; margin-top: 5px; }
-    .s5-perks span { font-size: clamp(10px,1vw,14px); color: #444; }
+    /* ═══════════════════════════════════════
+       SLIDE 5 · DOCTOR FEATURES
+    ═══════════════════════════════════════ */
+    .s5 { background: #eff6ff; color: #111; display: flex; gap: 5vw; padding: 6vh 8vw; }
+    .s5-l { flex: 1; display: flex; flex-direction: column; justify-content: center; }
+    .s5-l .lbl { color: #1d4ed8; }
+    .s5-l .head span { color: #1d4ed8; }
+    .s5-r { flex: 1.1; display: flex; flex-direction: column; justify-content: center; gap: 1.5vh; }
+    .s5 .f-desc { color: #334155; }
 
-    /* ──────────────────────────────────────────
-       SLIDE 6 · Traction (dark green)
-    ────────────────────────────────────────── */
-    .s6 {
-      background: linear-gradient(160deg,#064e3b 0%,#065f46 100%);
-      display: flex; flex-direction: column; justify-content: center;
-      padding: 7vh 8vw;
-    }
-    .s6 .orb { position: absolute; top:-5vh; right:-5vw; width: 35vw; height: 35vw; border-radius: 50%; background: rgba(16,185,129,.08); }
-    .s6-lbl  { font-size: clamp(10px,1vw,14px); font-weight: 700; color: #10b981; text-transform: uppercase; letter-spacing: .12em; margin-bottom: 1.5vh; }
-    .s6-h2   { font-size: clamp(20px,3vw,46px); font-weight: 900; color: #fff; line-height: 1.15; margin-bottom: 4vh; letter-spacing: -.02em; max-width: 70%; }
-    .s6-h2 span { color: #10b981; }
-    .s6-top  { display: grid; grid-template-columns: repeat(3,1fr); gap: 2vw; margin-bottom: 3vh; }
-    .s6-stat { background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.14); border-radius: 1vw; padding: 2.5vh 2vw; text-align: center; }
-    .s6-val  { font-size: clamp(22px,3.2vw,50px); font-weight: 900; color: #10b981; line-height: 1; margin-bottom: 1vh; }
-    .s6-slbl { font-size: clamp(12px,1.2vw,17px); font-weight: 700; color: #fff; margin-bottom: .5vh; }
-    .s6-sub  { font-size: clamp(10px,1vw,14px); color: rgba(255,255,255,.55); }
-    .s6-flow { display: grid; grid-template-columns: repeat(4,1fr); gap: 1.5vw; }
-    .s6-step { background: rgba(16,185,129,.12); border: 1px solid rgba(16,185,129,.25); border-radius: .8vw; padding: 1.5vh 1.5vw; display: flex; align-items: flex-start; gap: .8vw; }
-    .s6-n    { font-size: clamp(11px,1.2vw,17px); font-weight: 800; color: #10b981; flex-shrink: 0; }
-    .s6-stxt { font-size: clamp(10px,1.1vw,15px); color: rgba(255,255,255,.85); line-height: 1.4; }
+    /* ═══════════════════════════════════════
+       SLIDE 6 · PHARMACY FEATURES
+    ═══════════════════════════════════════ */
+    .s6 { background: #fffbeb; color: #111; display: flex; gap: 5vw; padding: 6vh 8vw; }
+    .s6-l { flex: 1; display: flex; flex-direction: column; justify-content: center; }
+    .s6-l .lbl { color: #92400e; }
+    .s6-l .head span { color: #d97706; }
+    .s6-r { flex: 1.2; display: flex; flex-direction: column; justify-content: center; gap: 1.5vh; }
+    .s6 .f-desc { color: #4b5563; }
+    .tier-row { border-radius: 1vw; padding: 1.5vh 2vw; display: flex; align-items: center; gap: 1.5vw; }
+    .tier-badge { width: clamp(28px,2.5vw,40px); height: clamp(28px,2.5vw,40px); border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .tier-badge span { font-size: clamp(11px,1.1vw,16px); color: #fff; font-weight: 900; }
+    .tier-name  { font-size: clamp(13px,1.3vw,18px); font-weight: 800; }
+    .tier-range { font-size: clamp(10px,1vw,13px); color: #888; margin-left: 8px; font-weight: 600; }
+    .tier-perks { font-size: clamp(10px,1vw,14px); color: #555; line-height: 1.4; }
 
-    /* ──────────────────────────────────────────
-       SLIDE 7 · Market (light grey)
-    ────────────────────────────────────────── */
-    .s7 {
-      background: #f8f9fa; color: #111;
-      display: flex; padding: 6vh 8vw; gap: 5vw;
-    }
-    .s7-l    { flex: 1.1; display: flex; flex-direction: column; justify-content: center; }
-    .s7-lbl  { font-size: clamp(10px,1vw,14px); font-weight: 700; color: #0f5b34; text-transform: uppercase; letter-spacing: .12em; margin-bottom: 1.5vh; }
-    .s7-h2   { font-size: clamp(20px,3.2vw,48px); font-weight: 900; color: #111; line-height: 1.1; margin-bottom: 3vh; letter-spacing: -.02em; }
-    .s7-h2 span { color: #0f5b34; }
-    .s7-rows { display: flex; flex-direction: column; gap: 1.5vh; }
-    .s7-row  { display: flex; align-items: center; gap: 2vw; background: #fff; border: 1px solid #e5e7eb; border-radius: .8vw; padding: 1.5vh 2vw; }
-    .s7-rtxt { flex: 1; }
-    .s7-rlbl { font-size: clamp(10px,1.05vw,14px); color: #777; margin-bottom: 3px; }
-    .s7-rsub { font-size: clamp(10px,1.1vw,15px); color: #555; line-height: 1.4; }
-    .s7-rval { font-size: clamp(16px,2.2vw,34px); font-weight: 900; flex-shrink: 0; text-align: right; }
-    .s7-r    { flex: .9; display: flex; flex-direction: column; justify-content: center; }
-    .s7-box  { background: #fff; border: 1.5px solid #e5e7eb; border-radius: 1.2vw; padding: 3vh 2.5vw; }
-    .s7-btit { font-size: clamp(10px,1vw,14px); font-weight: 700; color: #777; margin-bottom: 2vh; text-transform: uppercase; letter-spacing: .08em; }
-    .s7-brow { display: flex; justify-content: space-between; padding: 1.2vh 0; border-bottom: 1px solid #f3f4f6; }
-    .s7-brow:last-child { border-bottom: none; }
-    .s7-bmod { font-size: clamp(12px,1.2vw,17px); font-weight: 700; color: #111; }
-    .s7-bdsc { font-size: clamp(10px,1.05vw,14px); color: #555; text-align: right; max-width: 55%; }
+    /* ═══════════════════════════════════════
+       SLIDE 7 · WHATSAPP BOT
+    ═══════════════════════════════════════ */
+    .s7 { background: linear-gradient(145deg,#064e3b 0%,#0a3d2e 100%); display: flex; gap: 6vw; padding: 6vh 8vw; }
+    .s7 .orb { position: absolute; bottom:-10vh; right:-5vw; width: 38vw; height: 38vw; border-radius: 50%; background: rgba(16,185,129,.06); }
+    .s7-l { flex: 1; display: flex; flex-direction: column; justify-content: center; }
+    .s7-l .lbl { color: #10b981; }
+    .s7-l .head { color: #fff; }
+    .s7-l .head span { color: #10b981; }
+    .s7-p { font-size: clamp(12px,1.3vw,18px); color: rgba(255,255,255,.65); line-height: 1.65; max-width: 90%; }
+    .s7-r { flex: 1.1; display: flex; flex-direction: column; justify-content: center; gap: 1.4vh; }
+    .cmd-row { background: rgba(255,255,255,.07); border: 1px solid rgba(255,255,255,.1); border-radius: .8vw; padding: 1.3vh 1.8vw; display: flex; gap: 1.5vw; align-items: center; }
+    .cmd-tag { background: #10b981; color: #fff; font-size: clamp(10px,1.05vw,14px); font-weight: 800; font-family: monospace; padding: 3px 10px; border-radius: 5px; white-space: nowrap; flex-shrink: 0; }
+    .cmd-desc { font-size: clamp(10px,1.1vw,15px); color: rgba(255,255,255,.75); line-height: 1.4; }
+    .s7-note { background: rgba(16,185,129,.12); border: 1px solid rgba(16,185,129,.25); border-radius: .8vw; padding: 1.5vh 1.8vw; display: flex; gap: 1vw; align-items: center; }
+    .s7-note span { font-size: clamp(10px,1.1vw,15px); color: rgba(255,255,255,.75); }
 
-    /* ──────────────────────────────────────────
-       SLIDE 8 · Ask (dark green)
-    ────────────────────────────────────────── */
-    .s8 {
-      background: linear-gradient(140deg,#0c4a3f 0%,#064e3b 50%,#022c22 100%);
-      display: flex; flex-direction: column; justify-content: center; align-items: center;
-      padding: 7vh 10vw; text-align: center;
-    }
-    .s8 .orb1{ position: absolute; top:-10%; left:-5%; width: 30vw; height: 30vw; border-radius: 50%; background: rgba(16,185,129,.08); }
-    .s8 .orb2{ position: absolute; bottom:-10%; right:-5%; width: 35vw; height: 35vw; border-radius: 50%; background: rgba(16,185,129,.06); }
-    .s8-lbl  { font-size: clamp(10px,1vw,14px); font-weight: 700; color: #10b981; text-transform: uppercase; letter-spacing: .12em; margin-bottom: 2vh; }
-    .s8-h2   { font-size: clamp(26px,4.5vw,70px); font-weight: 900; color: #fff; line-height: 1.1; margin-bottom: 2vh; letter-spacing: -.02em; }
-    .s8-h2 span { color: #10b981; }
-    .s8-p    { font-size: clamp(12px,1.5vw,22px); color: rgba(255,255,255,.65); max-width: 65%; line-height: 1.6; margin-bottom: 5vh; }
-    .s8-goals{ display: grid; grid-template-columns: repeat(3,1fr); gap: 2vw; width: 100%; max-width: 75%; margin-bottom: 4vh; }
-    .s8-goal { background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.12); border-radius: 1vw; padding: 2.5vh 2vw; }
-    .s8-gn   { font-size: clamp(20px,2.8vw,44px); font-weight: 900; color: #10b981; line-height: 1; margin-bottom: 1vh; }
-    .s8-gl   { font-size: clamp(12px,1.2vw,17px); font-weight: 700; color: #fff; margin-bottom: .5vh; }
-    .s8-gd   { font-size: clamp(10px,1vw,14px); color: rgba(255,255,255,.55); }
-    .s8-qt   { font-size: clamp(12px,1.3vw,18px); color: rgba(255,255,255,.5); font-style: italic; }
+    /* ═══════════════════════════════════════
+       SLIDE 8 · SAFETY TOOLS
+    ═══════════════════════════════════════ */
+    .s8 { background: #fff; color: #111; display: flex; flex-direction: column; justify-content: center; padding: 6vh 8vw; }
+    .s8 .lbl { color: #7c3aed; }
+    .s8 .head span { color: #7c3aed; }
+    .s8-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 2vw; }
+    .s8-card { border-radius: 1.2vw; padding: 2.8vh 2.2vw; }
+    .s8-icon { font-size: clamp(18px,2.2vw,34px); margin-bottom: 1.5vh; }
+    .s8-title { font-size: clamp(13px,1.4vw,20px); font-weight: 800; color: #111; margin-bottom: 1vh; }
+    .s8-desc  { font-size: clamp(11px,1.1vw,15px); color: #555; line-height: 1.5; }
+    .s8-pill  { display: inline-block; border-radius: 100px; padding: 3px 10px; font-size: clamp(9px,.95vw,13px); font-weight: 700; margin-top: 1.2vh; }
+
+    /* ═══════════════════════════════════════
+       SLIDE 9 · ADMIN / DRAP PORTAL
+    ═══════════════════════════════════════ */
+    .s9 { background: #1a1a2e; display: flex; flex-direction: column; justify-content: center; padding: 6vh 8vw; }
+    .s9 .lbl { color: #818cf8; }
+    .s9 .head { color: #fff; max-width: 80%; }
+    .s9 .head span { color: #818cf8; }
+    .s9-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 1.8vw; }
+    .s9-card { background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.1); border-radius: 1vw; padding: 2.2vh 1.8vw; }
+    .s9-icon { font-size: clamp(18px,2vw,30px); margin-bottom: 1.2vh; }
+    .s9-title { font-size: clamp(12px,1.3vw,18px); font-weight: 800; color: #fff; margin-bottom: .8vh; }
+    .s9-desc  { font-size: clamp(10px,1.05vw,14px); color: rgba(255,255,255,.55); line-height: 1.5; }
+
+    /* ═══════════════════════════════════════
+       SLIDE 10 · MARKET
+    ═══════════════════════════════════════ */
+    .s10 { background: #f8f9fa; color: #111; display: flex; gap: 5vw; padding: 6vh 8vw; }
+    .s10-l { flex: 1.1; display: flex; flex-direction: column; justify-content: center; }
+    .s10-l .lbl { color: #0f5b34; }
+    .s10-l .head span { color: #0f5b34; }
+    .s10-rows { display: flex; flex-direction: column; gap: 1.5vh; }
+    .s10-row  { display: flex; align-items: center; gap: 2vw; background: #fff; border: 1px solid #e5e7eb; border-radius: .8vw; padding: 1.4vh 2vw; }
+    .s10-rtxt { flex: 1; }
+    .s10-rlbl { font-size: clamp(10px,1.05vw,14px); color: #888; margin-bottom: 3px; }
+    .s10-rsub { font-size: clamp(10px,1.1vw,15px); color: #555; line-height: 1.4; }
+    .s10-rval { font-size: clamp(16px,2.1vw,32px); font-weight: 900; flex-shrink: 0; text-align: right; }
+    .s10-r { flex: .9; display: flex; flex-direction: column; justify-content: center; gap: 1.5vh; }
+    .s10-rev { background: #fff; border: 1.5px solid #e5e7eb; border-radius: 1.2vw; padding: 2.5vh 2.2vw; }
+    .s10-rtitle { font-size: clamp(10px,1vw,14px); font-weight: 700; color: #888; margin-bottom: 1.5vh; text-transform: uppercase; letter-spacing: .08em; }
+    .s10-rrow { display: flex; justify-content: space-between; align-items: flex-start; padding: 1.1vh 0; border-bottom: 1px solid #f3f4f6; gap: 1vw; }
+    .s10-rrow:last-child { border-bottom: none; }
+    .s10-rmod { font-size: clamp(12px,1.2vw,17px); font-weight: 700; color: #111; }
+    .s10-rdsc { font-size: clamp(10px,1.05vw,14px); color: #555; text-align: right; max-width: 55%; }
+
+    /* ═══════════════════════════════════════
+       SLIDE 11 · ASK
+    ═══════════════════════════════════════ */
+    .s11 { background: linear-gradient(140deg,#0c4a3f 0%,#064e3b 50%,#022c22 100%); display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 7vh 10vw; text-align: center; }
+    .s11 .orb1 { position: absolute; top:-10%; left:-5%; width: 28vw; height: 28vw; border-radius: 50%; background: rgba(16,185,129,.08); }
+    .s11 .orb2 { position: absolute; bottom:-10%; right:-5%; width: 32vw; height: 32vw; border-radius: 50%; background: rgba(16,185,129,.06); }
+    .s11 .lbl { color: #10b981; }
+    .s11 .head { color: #fff; }
+    .s11 .head span { color: #10b981; }
+    .s11-p { font-size: clamp(12px,1.45vw,21px); color: rgba(255,255,255,.62); max-width: 62%; line-height: 1.65; margin-bottom: 4.5vh; }
+    .s11-goals { display: grid; grid-template-columns: repeat(4,1fr); gap: 1.5vw; width: 100%; max-width: 88%; margin-bottom: 3.5vh; }
+    .s11-goal { background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.12); border-radius: 1vw; padding: 2.2vh 1.5vw; }
+    .s11-gn { font-size: clamp(18px,2.5vw,40px); font-weight: 900; color: #10b981; line-height: 1; margin-bottom: .8vh; }
+    .s11-gl { font-size: clamp(11px,1.15vw,16px); font-weight: 700; color: #fff; margin-bottom: .4vh; }
+    .s11-gd { font-size: clamp(9px,.95vw,13px); color: rgba(255,255,255,.5); }
+    .s11-qt { font-size: clamp(11px,1.2vw,17px); color: rgba(255,255,255,.45); font-style: italic; }
   </style>
 </head>
 <body>
 <div id="app">
 
-  <!-- Top bar -->
+  <!-- Topbar -->
   <div id="topbar">
     <div class="brand">PrivyHealth Pakistan</div>
     <div id="tabs"></div>
     <div id="nav">
       <button id="prevBtn" onclick="go(-1)">&#8592;</button>
-      <span id="counter">1 / 8</span>
+      <span id="counter">1 / 11</span>
       <button id="nextBtn" onclick="go(1)">&#8594;</button>
     </div>
     <button id="fsBtn" onclick="toggleFS()">&#9974; Fullscreen</button>
-    <div class="hint">Arrow keys &middot; F for fullscreen</div>
+    <div class="hint">Arrow keys &middot; F</div>
   </div>
 
-  <!-- Slide wrap -->
   <div id="wrap">
 
-    <!-- 1. Title -->
+    <!-- ── 1. TITLE ── -->
     <div class="slide s1 active">
       <div class="orb1"></div><div class="orb2"></div>
       <div class="s1-logo">
         <div class="s1-dot">
           <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 21 12 17.77 5.82 21 7 14.14 2 9.27l6.91-1.01L12 2z"/>
+            <path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
           </svg>
         </div>
         <span class="s1-brand">PrivyHealth Pakistan</span>
       </div>
-      <h1 class="s1-h1">Prescription fraud.<br><span>Eliminated.</span></h1>
-      <p class="s1-sub">Blockchain-verified prescriptions via 6-digit codes and WhatsApp — built for Pakistan's 230 million people and 100,000+ pharmacies.</p>
-      <div class="s1-badge"><span>DRAP Compliant &middot; WireFluid Network</span></div>
+      <h1 class="s1-h1">Pakistan's complete<br>digital health <span>platform</span></h1>
+      <p class="s1-sub">Blockchain-powered prescription verification, patient records, pharmacy compliance, doctor tools, and DRAP reporting — built for 230 million people.</p>
+      <div class="s1-badges">
+        <div class="s1-badge"><span>DRAP Compliant</span></div>
+        <div class="s1-badge"><span>WireFluid Network</span></div>
+        <div class="s1-badge"><span>WhatsApp-First</span></div>
+        <div class="s1-badge"><span>Urdu &amp; English</span></div>
+      </div>
       <div class="s1-stats">
-        <div class="s1-stat"><div class="s1-stat-n">6-digit</div><div class="s1-stat-l">Prescription Code</div></div>
-        <div class="s1-stat"><div class="s1-stat-n">WhatsApp</div><div class="s1-stat-l">Pharmacy Verify</div></div>
-        <div class="s1-stat"><div class="s1-stat-n">DRAP</div><div class="s1-stat-l">Compliant</div></div>
-        <div class="s1-stat"><div class="s1-stat-n">230M+</div><div class="s1-stat-l">Pakistanis</div></div>
+        <div class="s1-stat"><div class="s1-stat-n">4</div><div class="s1-stat-l">User Types</div></div>
+        <div class="s1-stat"><div class="s1-stat-n">16+</div><div class="s1-stat-l">Features</div></div>
+        <div class="s1-stat"><div class="s1-stat-n">WhatsApp</div><div class="s1-stat-l">Zero-app verify</div></div>
+        <div class="s1-stat"><div class="s1-stat-n">230M</div><div class="s1-stat-l">Pakistanis</div></div>
       </div>
     </div>
 
-    <!-- 2. Problem -->
+    <!-- ── 2. PROBLEM ── -->
     <div class="slide s2">
-      <div class="s2-lbl">The Problem</div>
-      <h2 class="s2-h2">Pakistan's prescription system<br>is <span>dangerously broken</span></h2>
+      <div class="lbl">The Problem</div>
+      <h2 class="head">Pakistan's health system is <span>dangerously broken</span></h2>
       <div class="s2-grid">
         <div class="s2-card" style="background:#fef2f2;border:1px solid #fca5a5">
-          <div class="s2-stat" style="color:#dc2626">95%</div>
+          <div class="s2-stat red">95%</div>
           <div class="s2-title">pharmacies have no qualified pharmacist</div>
-          <div class="s2-det">Just shopkeepers dispensing antibiotics freely with zero verification</div>
+          <div class="s2-det">Shopkeepers dispense antibiotics and controlled substances freely, with zero verification</div>
         </div>
         <div class="s2-card" style="background:#fffbeb;border:1px solid #fcd34d">
-          <div class="s2-stat" style="color:#d97706">XDR</div>
-          <div class="s2-title">typhoid crisis from antibiotic misuse</div>
-          <div class="s2-det">Pakistan declared a global health emergency — caused by freely dispensed antibiotics</div>
+          <div class="s2-stat amber">XDR</div>
+          <div class="s2-title">typhoid crisis from antibiotic overuse</div>
+          <div class="s2-det">Pakistan declared a global health emergency caused directly by freely dispensed antibiotics</div>
         </div>
         <div class="s2-card" style="background:#f5f3ff;border:1px solid #c4b5fd">
-          <div class="s2-stat" style="color:#7c3aed">100k+</div>
+          <div class="s2-stat purple">100k+</div>
           <div class="s2-title">unlicensed medicine shops nationwide</div>
-          <div class="s2-det">QR code solutions fail — most shopkeepers have basic Android phones, no scanner app</div>
+          <div class="s2-det">QR code apps fail — most shopkeepers own basic Android phones with no scanner app installed</div>
         </div>
       </div>
     </div>
 
-    <!-- 3. Solution -->
+    <!-- ── 3. FULL PLATFORM MAP ── -->
     <div class="slide s3">
-      <div class="orb"></div>
-      <div class="s3-lbl">Our Solution</div>
-      <h2 class="s3-h2">Works on any phone. Even basic Android.<br><span>No app download needed.</span></h2>
+      <div class="lbl">Complete Platform</div>
+      <h2 class="head">One platform. <span>Four roles. Every need covered.</span></h2>
       <div class="s3-grid">
-        <div class="s3-card"><div class="s3-icon">&#8599;</div><div class="s3-title">6-Digit Human-Readable Code</div><div class="s3-desc">PK-7X4M2K — patients say this at any pharmacy. No smartphone, no QR, no app required.</div></div>
-        <div class="s3-card"><div class="s3-icon">&#9678;</div><div class="s3-title">WhatsApp-First Verification</div><div class="s3-desc">Pharmacist sends "verify PK-7X4M2K" &rarr; instant reply with full prescription details. Zero training needed.</div></div>
-        <div class="s3-card"><div class="s3-icon">&#9672;</div><div class="s3-title">DRAP-Compliant Categories</div><div class="s3-desc">Schedule G, H, OTC, and Controlled Substances — automatically flagged and gated by pharmacy tier.</div></div>
-        <div class="s3-card"><div class="s3-icon">&#9650;</div><div class="s3-title">Pharmacy Incentive Pyramid</div><div class="s3-desc">Basic &rarr; Verified &rarr; Premium. Pharmacies earn credits per verification — driven to comply.</div></div>
+        <!-- Patient -->
+        <div class="s3-col" style="background:rgba(16,185,129,.08);border:1px solid rgba(16,185,129,.2)">
+          <div class="s3-col-head green">&#128100; Patient</div>
+          <div class="s3-feat"><span class="green">&#8226;</span> View active prescriptions</div>
+          <div class="s3-feat"><span class="green">&#8226;</span> Encrypted health records</div>
+          <div class="s3-feat"><span class="green">&#8226;</span> Drug interaction checker</div>
+          <div class="s3-feat"><span class="green">&#8226;</span> Medicine price comparator</div>
+          <div class="s3-feat"><span class="green">&#8226;</span> Print &amp; WhatsApp Rx share</div>
+          <div class="s3-feat"><span class="green">&#8226;</span> Emergency QR access</div>
+        </div>
+        <!-- Doctor -->
+        <div class="s3-col" style="background:rgba(37,99,235,.08);border:1px solid rgba(37,99,235,.2)">
+          <div class="s3-col-head blue">&#129658; Doctor</div>
+          <div class="s3-feat"><span class="blue">&#8226;</span> Digital prescription pad</div>
+          <div class="s3-feat"><span class="blue">&#8226;</span> DRAP category auto-assign</div>
+          <div class="s3-feat"><span class="blue">&#8226;</span> Refill management (0–3)</div>
+          <div class="s3-feat"><span class="blue">&#8226;</span> PMDC-verified doctor profile</div>
+          <div class="s3-feat"><span class="blue">&#8226;</span> Prescription history dashboard</div>
+          <div class="s3-feat"><span class="blue">&#8226;</span> Doctor directory &amp; booking</div>
+        </div>
+        <!-- Pharmacy -->
+        <div class="s3-col" style="background:rgba(217,119,6,.08);border:1px solid rgba(217,119,6,.2)">
+          <div class="s3-col-head amber">&#127968; Pharmacy</div>
+          <div class="s3-feat"><span class="amber">&#8226;</span> 6-digit code verification</div>
+          <div class="s3-feat"><span class="amber">&#8226;</span> WhatsApp verify (no app)</div>
+          <div class="s3-feat"><span class="amber">&#8226;</span> Anti-double-fill lock</div>
+          <div class="s3-feat"><span class="amber">&#8226;</span> Allergy alert on dispense</div>
+          <div class="s3-feat"><span class="amber">&#8226;</span> 3-tier reward system</div>
+          <div class="s3-feat"><span class="amber">&#8226;</span> Controlled Rx unlocked at Premium</div>
+        </div>
+        <!-- Admin/DRAP -->
+        <div class="s3-col" style="background:rgba(129,140,248,.08);border:1px solid rgba(129,140,248,.2)">
+          <div class="s3-col-head purple">&#128202; Admin / DRAP</div>
+          <div class="s3-feat"><span class="purple">&#8226;</span> System-wide analytics</div>
+          <div class="s3-feat"><span class="purple">&#8226;</span> DRAP schedule reporting</div>
+          <div class="s3-feat"><span class="purple">&#8226;</span> Monthly compliance export</div>
+          <div class="s3-feat"><span class="purple">&#8226;</span> Pharmacy registry &amp; audit</div>
+          <div class="s3-feat"><span class="purple">&#8226;</span> Prescription fill-rate tracking</div>
+          <div class="s3-feat"><span class="purple">&#8226;</span> WireFluid network status</div>
+        </div>
       </div>
     </div>
 
-    <!-- 4. How It Works -->
+    <!-- ── 4. PATIENT FEATURES ── -->
     <div class="slide s4">
-      <div class="s4-lbl">How It Works</div>
-      <h2 class="s4-h2">From prescription to pharmacy in <span>under 30 seconds</span></h2>
-      <div class="s4-grid">
-        <div class="s4-line"></div>
-        <div class="s4-card" style="background:#eff6ff;border:1.5px solid #bfdbfe">
-          <div class="s4-num" style="background:#2563eb"><span>01</span></div>
-          <div class="s4-actor" style="color:#2563eb">Doctor</div>
-          <div class="s4-act">Writes prescription on PrivyHealth</div>
-          <div class="s4-det">Fills medicine, dosage, category — one confirmation screen</div>
+      <div class="s4-l">
+        <div class="lbl">Patient Portal</div>
+        <h2 class="head">Patients own their<br>health data. <span>Forever.</span></h2>
+        <p style="font-size:clamp(12px,1.3vw,18px);color:#444;line-height:1.65;max-width:90%">Every prescription, every record, stored on the WireFluid secure network — encrypted, patient-owned, accessible anywhere via 6-digit code or QR.</p>
+      </div>
+      <div class="s4-r">
+        <div class="f-card" style="background:#f0fdf4;border:1px solid #86efac">
+          <div class="f-icon">&#128203;</div>
+          <div><div class="f-title" style="color:#0f5b34">Active Prescription Dashboard</div><div class="f-desc">View all active, filled, and expired prescriptions. See days remaining, refill count, and one-tap pharmacy share.</div></div>
         </div>
-        <div class="s4-card" style="background:#f5f3ff;border:1.5px solid #ddd6fe">
-          <div class="s4-num" style="background:#7c3aed"><span>02</span></div>
-          <div class="s4-actor" style="color:#7c3aed">System</div>
-          <div class="s4-act">Generates 6-digit code instantly</div>
-          <div class="s4-det">PK-7X4M2K — secured on WireFluid, timestamped with doctor signature</div>
+        <div class="f-card" style="background:#f0fdf4;border:1px solid #86efac">
+          <div class="f-icon">&#128247;</div>
+          <div><div class="f-title" style="color:#0f5b34">Print &amp; WhatsApp Share</div><div class="f-desc">Generate a printable DRAP-formatted prescription or send the code directly via WhatsApp to any pharmacist.</div></div>
         </div>
-        <div class="s4-card" style="background:#f0fdf4;border:1.5px solid #86efac">
-          <div class="s4-num" style="background:#0f5b34"><span>03</span></div>
-          <div class="s4-actor" style="color:#0f5b34">Patient</div>
-          <div class="s4-act">Shows code at pharmacy</div>
-          <div class="s4-det">Says "Code hai PK-7X4M2K" or sends WhatsApp — no paper slip needed</div>
+        <div class="f-card" style="background:#f0fdf4;border:1px solid #86efac">
+          <div class="f-icon">&#128680;</div>
+          <div><div class="f-title" style="color:#0f5b34">Emergency QR Access</div><div class="f-desc">Scan patient's emergency QR without login — blood type and allergies visible instantly in any emergency.</div></div>
         </div>
-        <div class="s4-card" style="background:#fffbeb;border:1.5px solid #fcd34d">
-          <div class="s4-num" style="background:#d97706"><span>04</span></div>
-          <div class="s4-actor" style="color:#d97706">Pharmacist</div>
-          <div class="s4-act">Verifies in seconds</div>
-          <div class="s4-det">Types or WhatsApps the code &rarr; full prescription details returned instantly</div>
+        <div class="f-card" style="background:#f0fdf4;border:1px solid #86efac">
+          <div class="f-icon">&#128196;</div>
+          <div><div class="f-title" style="color:#0f5b34">Encrypted Health Records</div><div class="f-desc">Full medical history secured on WireFluid network. Patients control access — no hospital can lock them out.</div></div>
         </div>
       </div>
     </div>
 
-    <!-- 5. Pharmacy Tiers -->
+    <!-- ── 5. DOCTOR FEATURES ── -->
     <div class="slide s5">
       <div class="s5-l">
-        <div class="s5-lbl">Pharmacy Incentives</div>
-        <h2 class="s5-h2">The pyramid that makes<br><span>pharmacies want to verify</span></h2>
-        <p class="s5-p">Most systems try to force compliance. PrivyHealth makes pharmacies compete to be verified — because higher tiers mean more patients and higher-value prescriptions.</p>
+        <div class="lbl">Doctor Portal</div>
+        <h2 class="head">Digital prescribing.<br><span>PMDC-verified.</span> Legally sound.</h2>
+        <p style="font-size:clamp(12px,1.3vw,18px);color:#334155;line-height:1.65;max-width:90%">Every prescription carries the doctor's PMDC licence number, is timestamped on WireFluid, and is automatically categorised by DRAP schedule — creating an unforgeable legal record.</p>
       </div>
       <div class="s5-r">
-        <div class="s5-tier" style="background:#fffbeb;border:1.5px solid #fcd34d">
-          <div class="s5-dot" style="background:#d97706"><span>&#9733;</span></div>
-          <div><div style="display:flex;align-items:center"><span class="s5-name" style="color:#d97706">Premium</span><span class="s5-range">500+ verifications</span></div><div class="s5-perks"><span>&#8226; Controlled substance prescriptions</span><span>&#8226; Priority directory listing</span><span>&#8226; Patient referrals from app</span></div></div>
+        <div class="f-card" style="background:#dbeafe;border:1px solid #93c5fd">
+          <div class="f-icon">&#129399;</div>
+          <div><div class="f-title" style="color:#1d4ed8">Digital Prescription Pad</div><div class="f-desc">Search medicines, set dosage, frequency, duration, refills (0–3), allergy alerts, and DRAP category in one screen.</div></div>
         </div>
-        <div class="s5-tier" style="background:#eff6ff;border:1.5px solid #bfdbfe">
-          <div class="s5-dot" style="background:#2563eb"><span>&#10003;</span></div>
-          <div><div style="display:flex;align-items:center"><span class="s5-name" style="color:#2563eb">Verified</span><span class="s5-range">100+ verifications</span></div><div class="s5-perks"><span>&#8226; Featured pharmacy listing</span><span>&#8226; Patient referral traffic</span><span>&#8226; Standard medicines unlocked</span></div></div>
+        <div class="f-card" style="background:#dbeafe;border:1px solid #93c5fd">
+          <div class="f-icon">&#127775;</div>
+          <div><div class="f-title" style="color:#1d4ed8">PMDC-Verified Profile</div><div class="f-desc">Patients and pharmacies see the doctor's verified PMDC licence number on every prescription — builds trust instantly.</div></div>
         </div>
-        <div class="s5-tier" style="background:#f9fafb;border:1.5px solid #e5e7eb">
-          <div class="s5-dot" style="background:#6b7280"><span>&#9702;</span></div>
-          <div><div style="display:flex;align-items:center"><span class="s5-name" style="color:#6b7280">Basic</span><span class="s5-range">0–99 verifications</span></div><div class="s5-perks"><span>&#8226; Standard listing</span><span>&#8226; OTC and Schedule H only</span><span>&#8226; Earns verification credits</span></div></div>
+        <div class="f-card" style="background:#dbeafe;border:1px solid #93c5fd">
+          <div class="f-icon">&#128269;</div>
+          <div><div class="f-title" style="color:#1d4ed8">Doctor Directory</div><div class="f-desc">Searchable by specialty and city. Patients see availability and can book directly. Doctors build a verified digital reputation.</div></div>
+        </div>
+        <div class="f-card" style="background:#dbeafe;border:1px solid #93c5fd">
+          <div class="f-icon">&#128200;</div>
+          <div><div class="f-title" style="color:#1d4ed8">Prescription Analytics</div><div class="f-desc">See today's count, total issued, and fill rate. Track which prescriptions have been dispensed and which are pending.</div></div>
         </div>
       </div>
     </div>
 
-    <!-- 6. Traction -->
+    <!-- ── 6. PHARMACY FEATURES ── -->
     <div class="slide s6">
-      <div class="orb"></div>
-      <div class="s6-lbl">Live Demo &amp; Traction</div>
-      <h2 class="s6-h2">Fully working system.<br><span>Try it right now.</span></h2>
-      <div class="s6-top">
-        <div class="s6-stat"><div class="s6-val">3</div><div class="s6-slbl">Live Demo Prescriptions</div><div class="s6-sub">PK-7X4M2K &middot; PK-9KRM4X &middot; PK-2BX8NQ</div></div>
-        <div class="s6-stat"><div class="s6-val">100%</div><div class="s6-slbl">WhatsApp Bot Functional</div><div class="s6-sub">verify / fill / refill / emergency — live</div></div>
-        <div class="s6-stat"><div class="s6-val">DRAP</div><div class="s6-slbl">Compliant Categories</div><div class="s6-sub">Schedule G, H, OTC, Controlled</div></div>
+      <div class="s6-l">
+        <div class="lbl">Pharmacy Portal</div>
+        <h2 class="head">Pharmacies that verify<br>earn <span>more patients.</span></h2>
+        <p style="font-size:clamp(12px,1.3vw,18px);color:#4b5563;line-height:1.65;max-width:90%">Instead of forcing compliance, PrivyHealth makes pharmacies compete to reach higher tiers — because Premium pharmacies unlock controlled-substance prescriptions and get patient referrals.</p>
       </div>
-      <div class="s6-flow">
-        <div class="s6-step"><span class="s6-n">1.</span><span class="s6-stxt">Doctor writes prescription</span></div>
-        <div class="s6-step"><span class="s6-n">2.</span><span class="s6-stxt">Patient gets 6-digit code</span></div>
-        <div class="s6-step"><span class="s6-n">3.</span><span class="s6-stxt">Pharmacist verifies on WhatsApp</span></div>
-        <div class="s6-step"><span class="s6-n">4.</span><span class="s6-stxt">Dispensed — recorded on WireFluid</span></div>
+      <div class="s6-r">
+        <div class="f-card" style="background:#fef3c7;border:1px solid #fcd34d;margin-bottom:.5vh">
+          <div class="f-icon">&#9989;</div>
+          <div><div class="f-title" style="color:#92400e">6-Digit + WhatsApp Verification</div><div class="f-desc">Type the code in the app OR send "verify PK-7X4M2K" on WhatsApp — full prescription details returned instantly.</div></div>
+        </div>
+        <div class="f-card" style="background:#fef3c7;border:1px solid #fcd34d;margin-bottom:.5vh">
+          <div class="f-icon">&#128274;</div>
+          <div><div class="f-title" style="color:#92400e">Anti-Fraud Double-Fill Lock</div><div class="f-desc">Once dispensed, the prescription is permanently locked on WireFluid — the same code can never be filled twice.</div></div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:1vh">
+          <div class="tier-row" style="background:#fef9c3;border:1.5px solid #fcd34d">
+            <div class="tier-badge" style="background:#d97706"><span>&#9733;</span></div>
+            <div><div style="display:flex;align-items:center"><span class="tier-name amber">Premium</span><span class="tier-range">500+ verifications</span></div><div class="tier-perks">Controlled substances unlocked &bull; Priority listing &bull; Referral traffic</div></div>
+          </div>
+          <div class="tier-row" style="background:#eff6ff;border:1.5px solid #bfdbfe">
+            <div class="tier-badge" style="background:#2563eb"><span>&#10003;</span></div>
+            <div><div style="display:flex;align-items:center"><span class="tier-name blue">Verified</span><span class="tier-range">100+ verifications</span></div><div class="tier-perks">Featured listing &bull; All standard medicines &bull; Patient referrals</div></div>
+          </div>
+          <div class="tier-row" style="background:#f9fafb;border:1.5px solid #e5e7eb">
+            <div class="tier-badge" style="background:#9ca3af"><span>&#9702;</span></div>
+            <div><div style="display:flex;align-items:center"><span class="tier-name" style="color:#6b7280">Basic</span><span class="tier-range">0–99 verifications</span></div><div class="tier-perks">OTC and Schedule H only &bull; Earns verification credits</div></div>
+          </div>
+        </div>
       </div>
     </div>
 
-    <!-- 7. Market -->
+    <!-- ── 7. WHATSAPP BOT ── -->
     <div class="slide s7">
+      <div class="orb"></div>
       <div class="s7-l">
-        <div class="s7-lbl">Market Opportunity</div>
-        <h2 class="s7-h2">The largest unserved<br><span>pharma market in Asia</span></h2>
-        <div class="s7-rows">
-          <div class="s7-row"><div class="s7-rtxt"><div class="s7-rlbl">Total Addressable Market</div><div class="s7-rsub">Pakistan's pharmaceutical market size (2025)</div></div><div class="s7-rval" style="color:#0f5b34">PKR 450B</div></div>
-          <div class="s7-row"><div class="s7-rtxt"><div class="s7-rlbl">Pharmacy Network</div><div class="s7-rsub">Medicine shops — most undigitised</div></div><div class="s7-rval" style="color:#2563eb">100,000+</div></div>
-          <div class="s7-row"><div class="s7-rtxt"><div class="s7-rlbl">Patient Population</div><div class="s7-rsub">Potential users at full scale</div></div><div class="s7-rval" style="color:#7c3aed">230M</div></div>
-          <div class="s7-row"><div class="s7-rtxt"><div class="s7-rlbl">DRAP Regulatory Alignment</div><div class="s7-rsub">Schedule G/H enforcement mandate from 2026</div></div><div class="s7-rval" style="color:#d97706">Ready</div></div>
-        </div>
+        <div class="lbl">WhatsApp Bot</div>
+        <h2 class="head" style="color:#fff">Zero training.<br><span>Zero app download.</span></h2>
+        <p class="s7-p">Pharmacists with basic Android phones send one WhatsApp message and receive full prescription details — no app to install, no QR scanner, no training required. Works on every phone in Pakistan.</p>
       </div>
       <div class="s7-r">
-        <div class="s7-box">
-          <div class="s7-btit">Revenue Model</div>
-          <div class="s7-brow"><div class="s7-bmod">Pharmacy SaaS</div><div class="s7-bdsc">PKR 999/month per verified pharmacy</div></div>
-          <div class="s7-brow"><div class="s7-bmod">Doctor Subscriptions</div><div class="s7-bdsc">Premium PMDC-verified tier — PKR 2,499/mo</div></div>
-          <div class="s7-brow"><div class="s7-bmod">Hospital API</div><div class="s7-bdsc">Per-API-call pricing for hospital EMR integration</div></div>
-          <div class="s7-brow"><div class="s7-bmod">DRAP Reporting</div><div class="s7-bdsc">Automated compliance reports for regulators</div></div>
+        <div class="cmd-row">
+          <div class="cmd-tag">verify [CODE]</div>
+          <div class="cmd-desc">Returns medicine name, dosage, doctor, expiry, and allergy alerts instantly</div>
+        </div>
+        <div class="cmd-row">
+          <div class="cmd-tag">fill [CODE]</div>
+          <div class="cmd-desc">Marks prescription as dispensed — permanently locked on WireFluid against re-use</div>
+        </div>
+        <div class="cmd-row">
+          <div class="cmd-tag">refill [CODE]</div>
+          <div class="cmd-desc">Checks remaining refill count and issues refill if authorised by doctor</div>
+        </div>
+        <div class="cmd-row">
+          <div class="cmd-tag">my record</div>
+          <div class="cmd-desc">Returns a secure link to the patient's full digital health dashboard</div>
+        </div>
+        <div class="cmd-row">
+          <div class="cmd-tag">emergency</div>
+          <div class="cmd-desc">Provides instant access to blood type, allergies, and emergency contacts</div>
+        </div>
+        <div class="cmd-row">
+          <div class="cmd-tag">help</div>
+          <div class="cmd-desc">Lists all available commands in English and Urdu</div>
+        </div>
+        <div class="s7-note">
+          <span>&#128241;</span>
+          <span>Works on any basic Android &bull; No app install &bull; Bi-lingual (English + Urdu)</span>
         </div>
       </div>
     </div>
 
-    <!-- 8. Ask -->
+    <!-- ── 8. SAFETY TOOLS ── -->
     <div class="slide s8">
-      <div class="orb1"></div><div class="orb2"></div>
-      <div class="s8-lbl">What We're Asking For</div>
-      <h2 class="s8-h2">Help us fix Pakistan's<br><span>prescription crisis</span></h2>
-      <p class="s8-p">We're ready to deploy to 1,000 pharmacies in Karachi, integrate with DRAP's registry, and onboard 100 PMDC-verified doctors onto the platform.</p>
-      <div class="s8-goals">
-        <div class="s8-goal"><div class="s8-gn">1,000</div><div class="s8-gl">pharmacies onboarded</div><div class="s8-gd">Karachi pilot in 90 days</div></div>
-        <div class="s8-goal"><div class="s8-gn">100+</div><div class="s8-gl">PMDC-verified doctors</div><div class="s8-gd">On platform at launch</div></div>
-        <div class="s8-goal"><div class="s8-gn">DRAP</div><div class="s8-gl">formal integration</div><div class="s8-gd">Real-time compliance reporting</div></div>
+      <div class="lbl">Built-In Safety Tools</div>
+      <h2 class="head">The tools that <span>prevent harm</span> before it happens</h2>
+      <div class="s8-grid">
+        <div class="s8-card" style="background:#f5f3ff;border:1px solid #ddd6fe">
+          <div class="s8-icon">&#9881;</div>
+          <div class="s8-title" style="color:#7c3aed">Drug Interaction Checker</div>
+          <div class="s8-desc">Check two medicines for dangerous interactions. Severity alerts — High, Medium, or Safe — shown immediately with clinical explanation.</div>
+          <div class="s8-pill" style="background:#ede9fe;color:#7c3aed">e.g. Warfarin + Aspirin → HIGH RISK</div>
+        </div>
+        <div class="s8-card" style="background:#ecfdf5;border:1px solid #6ee7b7">
+          <div class="s8-icon">&#128176;</div>
+          <div class="s8-title" style="color:#0f5b34">Medicine Price Checker</div>
+          <div class="s8-desc">Search DRAP-regulated Maximum Retail Prices for any brand-name medicine. Instantly compare with generic alternatives and see potential savings.</div>
+          <div class="s8-pill" style="background:#d1fae5;color:#0f5b34">MRP enforced by DRAP</div>
+        </div>
+        <div class="s8-card" style="background:#fef2f2;border:1px solid #fca5a5">
+          <div class="s8-icon">&#128680;</div>
+          <div class="s8-title" style="color:#dc2626">Emergency QR Access</div>
+          <div class="s8-desc">Scan a patient's QR code without login — blood type, allergies, and emergency contacts visible immediately. Built for emergency rooms and accident sites.</div>
+          <div class="s8-pill" style="background:#fee2e2;color:#dc2626">No login required</div>
+        </div>
       </div>
-      <div class="s8-qt">"Every unverified antibiotic sold without a prescription is a step toward the next epidemic."</div>
+    </div>
+
+    <!-- ── 9. ADMIN / DRAP PORTAL ── -->
+    <div class="slide s9">
+      <div class="lbl">Admin &amp; DRAP Portal</div>
+      <h2 class="head">Real-time visibility for <span>Pakistan's regulators</span></h2>
+      <div class="s9-grid">
+        <div class="s9-card">
+          <div class="s9-icon">&#128202;</div>
+          <div class="s9-title">System Analytics</div>
+          <div class="s9-desc">Live dashboard showing total prescriptions, fill rates, active pharmacies, and daily volumes across all regions.</div>
+        </div>
+        <div class="s9-card">
+          <div class="s9-icon">&#128196;</div>
+          <div class="s9-title">DRAP Schedule Reporting</div>
+          <div class="s9-desc">Visual breakdown of all prescriptions by category — Schedule G antibiotics, Schedule H, OTC, and Controlled Substances.</div>
+        </div>
+        <div class="s9-card">
+          <div class="s9-icon">&#128190;</div>
+          <div class="s9-title">Monthly Compliance Export</div>
+          <div class="s9-desc">One-click export of DRAP-compliant reports covering dispensing data, antibiotic volumes, and controlled substance usage.</div>
+        </div>
+        <div class="s9-card">
+          <div class="s9-icon">&#127981;</div>
+          <div class="s9-title">Pharmacy Registry &amp; Audit</div>
+          <div class="s9-desc">Full registry of every pharmacy — tier status, verification count, and history. Flag non-compliant shops for DRAP inspection.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── 10. MARKET ── -->
+    <div class="slide s10">
+      <div class="s10-l">
+        <div class="lbl">Market Opportunity</div>
+        <h2 class="head">The largest unserved<br><span>pharma market in Asia</span></h2>
+        <div class="s10-rows">
+          <div class="s10-row"><div class="s10-rtxt"><div class="s10-rlbl">Total Addressable Market</div><div class="s10-rsub">Pakistan pharmaceutical market (2025)</div></div><div class="s10-rval green">PKR 450B</div></div>
+          <div class="s10-row"><div class="s10-rtxt"><div class="s10-rlbl">Pharmacy Network</div><div class="s10-rsub">Medicine shops — most undigitised</div></div><div class="s10-rval blue">100,000+</div></div>
+          <div class="s10-row"><div class="s10-rtxt"><div class="s10-rlbl">Patient Population</div><div class="s10-rsub">Potential users at full scale</div></div><div class="s10-rval purple">230M</div></div>
+          <div class="s10-row"><div class="s10-rtxt"><div class="s10-rlbl">DRAP Regulatory Push</div><div class="s10-rsub">Schedule G/H enforcement mandate 2026</div></div><div class="s10-rval amber">Ready</div></div>
+        </div>
+      </div>
+      <div class="s10-r">
+        <div class="s10-rev">
+          <div class="s10-rtitle">Revenue Model</div>
+          <div class="s10-rrow"><div class="s10-rmod">Pharmacy SaaS</div><div class="s10-rdsc">PKR 999/month per verified pharmacy</div></div>
+          <div class="s10-rrow"><div class="s10-rmod">Doctor Subscriptions</div><div class="s10-rdsc">PMDC-verified premium tier — PKR 2,499/mo</div></div>
+          <div class="s10-rrow"><div class="s10-rmod">Hospital API</div><div class="s10-rdsc">Per-call pricing for EMR integration</div></div>
+          <div class="s10-rrow"><div class="s10-rmod">DRAP Compliance Reports</div><div class="s10-rdsc">Automated regulatory reporting service</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── 11. ASK ── -->
+    <div class="slide s11">
+      <div class="orb1"></div><div class="orb2"></div>
+      <div class="lbl">What We're Asking For</div>
+      <h2 class="head" style="margin-bottom:1.5vh">Help us fix Pakistan's<br><span>health infrastructure</span></h2>
+      <p class="s11-p">We have a fully working platform — prescriptions, patient records, pharmacy verification, WhatsApp bot, DRAP reporting, drug safety tools, and doctor directory. We're ready to scale.</p>
+      <div class="s11-goals">
+        <div class="s11-goal">
+          <div class="s11-gn">1,000</div>
+          <div class="s11-gl">pharmacies onboarded</div>
+          <div class="s11-gd">Karachi pilot — 90 days</div>
+        </div>
+        <div class="s11-goal">
+          <div class="s11-gn">100+</div>
+          <div class="s11-gl">PMDC doctors</div>
+          <div class="s11-gd">On platform at launch</div>
+        </div>
+        <div class="s11-goal">
+          <div class="s11-gn">DRAP</div>
+          <div class="s11-gl">formal integration</div>
+          <div class="s11-gd">Real-time compliance link</div>
+        </div>
+        <div class="s11-goal">
+          <div class="s11-gn">5</div>
+          <div class="s11-gl">hospital EMR pilots</div>
+          <div class="s11-gd">API integration</div>
+        </div>
+      </div>
+      <div class="s11-qt">"Pakistan doesn't need better paper prescriptions. It needs a system that makes fraud impossible."</div>
     </div>
 
   </div><!-- /wrap -->
 </div><!-- /app -->
 
 <script>
-  var LABELS = ['Title','Problem','Solution','How It Works','Pharmacy Tiers','Traction','Market','Ask'];
+  var LABELS = ['Title','Problem','Platform','Patients','Doctors','Pharmacies','WhatsApp Bot','Safety Tools','DRAP Admin','Market','Ask'];
   var total = LABELS.length, cur = 0;
   var slides  = document.querySelectorAll('.slide');
   var counter = document.getElementById('counter');
