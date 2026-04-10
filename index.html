@@ -3,223 +3,230 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>PrivyHealth Pakistan — Pitch Deck</title>
+  <title>PrivyHealth Pakistan — Entangled Hackathon 2026</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html, body { width: 100%; height: 100%; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #0d0d0d; color: #fff; overflow: hidden; }
+    html, body { width: 100%; height: 100%; background: #040d08; color: #ecfdf5; overflow: hidden; }
+    body { font-family: 'Plus Jakarta Sans', sans-serif; }
+
+    /* ── App shell ── */
     #app { width: 100%; height: 100%; display: flex; flex-direction: column; }
 
     /* ── Topbar ── */
     #topbar {
-      flex-shrink: 0; display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
-      padding: 9px 18px; background: #141414; border-bottom: 1px solid #252525;
+      flex-shrink: 0;
+      display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
+      padding: 8px 16px; background: rgba(4,13,8,.95); border-bottom: 1px solid #0c2818;
+      backdrop-filter: blur(8px);
     }
-    .brand { font-weight: 800; font-size: 14px; color: #10b981; white-space: nowrap; margin-right: 4px; }
-    #tabs { display: flex; gap: 3px; flex-wrap: wrap; flex: 1; }
+    .brand { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 13px; color: #34d399; white-space: nowrap; }
+    #tabs { display: flex; gap: 2px; flex-wrap: wrap; flex: 1; }
     #tabs button {
-      padding: 4px 10px; border-radius: 6px; border: 1px solid #2a2a2a;
-      background: transparent; color: #666; font-size: 11px; cursor: pointer; transition: all .15s; white-space: nowrap;
+      padding: 3px 9px; border-radius: 5px; border: 1px solid #0c2818;
+      background: transparent; color: #4d6e5e; font-size: 10px; font-family: 'Plus Jakarta Sans', sans-serif;
+      cursor: pointer; transition: all .15s; white-space: nowrap;
     }
-    #tabs button:hover { background: #1e1e1e; color: #aaa; }
-    #tabs button.active { background: #10b981; border-color: #10b981; color: #fff; font-weight: 700; }
-    #nav { display: flex; gap: 5px; align-items: center; flex-shrink: 0; }
+    #tabs button:hover { background: #0c1c15; color: #6ee7b7; }
+    #tabs button.active { background: #34d399; border-color: #34d399; color: #040d08; font-weight: 700; }
+    #nav { display: flex; gap: 4px; align-items: center; flex-shrink: 0; }
     #nav button {
-      width: 30px; height: 30px; border-radius: 7px; border: 1px solid #2a2a2a;
-      background: #1e1e1e; color: #ccc; font-size: 14px; cursor: pointer;
+      width: 28px; height: 28px; border-radius: 6px; border: 1px solid #0c2818;
+      background: #0c1c15; color: #6ee7b7; font-size: 13px; cursor: pointer;
       display: flex; align-items: center; justify-content: center; transition: all .15s;
     }
-    #nav button:hover:not(:disabled) { background: #2a2a2a; }
+    #nav button:hover:not(:disabled) { background: #163324; }
     #nav button:disabled { opacity: .3; cursor: default; }
-    #counter { font-size: 11px; color: #555; min-width: 38px; text-align: center; }
-    #fsBtn { padding: 5px 12px; border-radius: 7px; border: 1px solid #10b981; background: transparent; color: #10b981; font-size: 11px; font-weight: 700; cursor: pointer; white-space: nowrap; }
-    #fsBtn:hover { background: rgba(16,185,129,.1); }
-    .hint { font-size: 10px; color: #444; white-space: nowrap; }
+    #counter { font-size: 10px; font-family: 'JetBrains Mono', monospace; color: #4d6e5e; min-width: 34px; text-align: center; }
+    #fsBtn { padding: 4px 10px; border-radius: 6px; border: 1px solid #34d399; background: transparent; color: #34d399; font-size: 10px; font-weight: 700; cursor: pointer; }
+    #fsBtn:hover { background: rgba(52,211,153,.1); }
 
-    /* ── Slide container ── */
+    /* ── Slide wrap ── */
     #wrap { flex: 1; min-height: 0; position: relative; overflow: hidden; }
     .slide {
       position: absolute !important;
       top: 0; left: 0; width: 100%; height: 100%; overflow: hidden;
-      opacity: 0; pointer-events: none; transition: opacity .22s ease;
+      opacity: 0; pointer-events: none; transition: opacity .2s ease;
     }
     .slide.active { opacity: 1; pointer-events: auto; }
 
-    /* ── Shared helpers ── */
-    .lbl { font-size: clamp(9px,.9vw,13px); font-weight: 700; text-transform: uppercase; letter-spacing: .12em; margin-bottom: 1.5vh; }
-    .head { font-size: clamp(20px,3.2vw,50px); font-weight: 900; line-height: 1.1; margin-bottom: 3vh; letter-spacing: -.02em; }
-    .green { color: #10b981; }
-    .red   { color: #dc2626; }
-    .blue  { color: #2563eb; }
-    .purple{ color: #7c3aed; }
-    .amber { color: #d97706; }
-    .card  { border-radius: 1vw; padding: 2.2vh 2vw; }
+    /* ── Common ── */
+    .g   { color: #34d399; }
+    .g2  { color: #6ee7b7; }
+    .muted { color: #4d6e5e; }
+    .amber { color: #fbbf24; }
+    .red   { color: #f87171; }
 
-    /* ═══════════════════════════════════════
-       SLIDE 1 · TITLE
-    ═══════════════════════════════════════ */
-    .s1 { background: linear-gradient(135deg,#0a2e24 0%,#064e3b 50%,#022c22 100%); display: flex; flex-direction: column; justify-content: center; align-items: flex-start; padding: 8vh 10vw; }
-    .s1 .orb1 { position: absolute; top: 8%; right: 6%; width: 36vw; height: 36vw; border-radius: 50%; background: radial-gradient(circle, rgba(16,185,129,.13) 0%, transparent 70%); }
-    .s1 .orb2 { position: absolute; bottom:-8%; right:22%; width: 20vw; height: 20vw; border-radius: 50%; background: rgba(52,211,153,.06); }
-    .s1-logo { display: flex; align-items: center; gap: 10px; margin-bottom: 2.5vh; }
-    .s1-dot { width: clamp(22px,2.2vw,36px); height: clamp(22px,2.2vw,36px); background: #10b981; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
-    .s1-dot svg { width: 55%; height: 55%; }
-    .s1-brand { font-size: clamp(11px,1.2vw,18px); font-weight: 700; color: #10b981; letter-spacing: .08em; text-transform: uppercase; }
-    .s1-h1 { font-size: clamp(28px,5vw,76px); font-weight: 900; color: #fff; line-height: 1.08; margin-bottom: 2.5vh; letter-spacing: -.02em; max-width: 65%; }
-    .s1-h1 span { color: #10b981; }
-    .s1-sub { font-size: clamp(12px,1.5vw,21px); color: rgba(255,255,255,.68); max-width: 55%; line-height: 1.65; margin-bottom: 3.5vh; }
-    .s1-badges { display: flex; gap: 1.2vw; flex-wrap: wrap; }
-    .s1-badge { background: rgba(16,185,129,.14); border: 1px solid rgba(16,185,129,.35); border-radius: 100px; padding: 7px 18px; }
-    .s1-badge span { font-size: clamp(10px,1.1vw,15px); color: #10b981; font-weight: 700; }
-    .s1-stats { position: absolute; right: 7vw; top: 50%; transform: translateY(-50%); display: flex; flex-direction: column; gap: 1.5vh; }
-    .s1-stat { background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.09); border-radius: 1vw; padding: 1.5vh 2vw; text-align: center; min-width: 11vw; }
-    .s1-stat-n { font-size: clamp(13px,1.6vw,24px); font-weight: 800; color: #10b981; }
-    .s1-stat-l { font-size: clamp(8px,.85vw,12px); color: rgba(255,255,255,.45); margin-top: 3px; }
+    .slide-inner {
+      width: 100%; height: 100%;
+      display: flex; flex-direction: column; justify-content: center;
+      padding: 6vh 8vw;
+    }
+    .slide-badge {
+      display: inline-flex; align-items: center; gap: .5vw;
+      background: rgba(52,211,153,.12); border: 1px solid rgba(52,211,153,.3);
+      border-radius: 100px; padding: 5px 14px;
+      font-size: clamp(9px,.9vw,13px); color: #34d399; font-weight: 700;
+      letter-spacing: .04em; margin-bottom: 2.5vh;
+    }
+    .slide-title {
+      font-family: 'Syne', sans-serif; font-weight: 800;
+      font-size: clamp(22px,3.2vw,48px); color: #ecfdf5; line-height: 1.12;
+      margin-bottom: 3vh; letter-spacing: -.02em;
+    }
+    .slide-title .g { color: #34d399; }
 
-    /* ═══════════════════════════════════════
-       SLIDE 2 · PROBLEM
-    ═══════════════════════════════════════ */
-    .s2 { background: #fafafa; color: #111; display: flex; flex-direction: column; justify-content: center; padding: 7vh 8vw; box-shadow: inset 6px 0 0 #dc2626; }
-    .s2 .lbl { color: #dc2626; }
-    .s2 .head span { color: #dc2626; }
-    .s2-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 2vw; }
-    .s2-card { border-radius: 1.2vw; padding: 3vh 2.5vw; }
-    .s2-stat { font-size: clamp(22px,3.8vw,58px); font-weight: 900; line-height: 1; margin-bottom: 1.5vh; }
-    .s2-title { font-size: clamp(12px,1.3vw,18px); font-weight: 700; color: #111; margin-bottom: .8vh; line-height: 1.3; }
-    .s2-det   { font-size: clamp(10px,1.1vw,15px); color: #555; line-height: 1.5; }
+    /* WireFluid watermark */
+    .wf-mark {
+      position: absolute; bottom: 2.5vh; right: 2.5vw;
+      font-size: clamp(9px,.9vw,12px); font-family: 'JetBrains Mono', monospace;
+      color: #163324; letter-spacing: .04em;
+    }
+    .slide-num {
+      position: absolute; bottom: 2.5vh; left: 50%; transform: translateX(-50%);
+      font-size: 10px; color: #163324; font-family: 'JetBrains Mono', monospace;
+    }
 
-    /* ═══════════════════════════════════════
-       SLIDE 3 · FULL PLATFORM MAP
-    ═══════════════════════════════════════ */
-    .s3 { background: #111; display: flex; flex-direction: column; justify-content: center; padding: 6vh 8vw; }
-    .s3 .lbl { color: #10b981; }
-    .s3 .head { color: #fff; max-width: 80%; }
-    .s3 .head span { color: #10b981; }
-    .s3-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 1.8vw; }
-    .s3-col { border-radius: 1vw; padding: 2.2vh 1.8vw; display: flex; flex-direction: column; gap: 1.1vh; }
-    .s3-col-head { font-size: clamp(13px,1.4vw,20px); font-weight: 800; margin-bottom: .6vh; }
-    .s3-col-sub  { font-size: clamp(9px,1vw,14px); line-height: 1.45; }
-    .s3-feat { display: flex; align-items: flex-start; gap: .5vw; font-size: clamp(10px,1.05vw,14px); line-height: 1.4; }
-    .s3-feat span { font-weight: 700; flex-shrink: 0; }
+    /* Grid helpers */
+    .g2col { display: grid; grid-template-columns: 1fr 1fr; gap: 1.8vw; }
+    .g3col { display: grid; grid-template-columns: repeat(3,1fr); gap: 2vw; }
+    .g4col { display: grid; grid-template-columns: repeat(4,1fr); gap: 1.5vw; }
+    .g23col { display: grid; grid-template-columns: repeat(2,1fr) repeat(3,1fr); gap: 1.5vw; }
 
-    /* ═══════════════════════════════════════
-       SLIDE 4 · PATIENT FEATURES
-    ═══════════════════════════════════════ */
-    .s4 { background: #f0fdf4; color: #111; display: flex; gap: 5vw; padding: 6vh 8vw; }
-    .s4-l { flex: 1; display: flex; flex-direction: column; justify-content: center; }
-    .s4-l .lbl { color: #0f5b34; }
-    .s4-l .head span { color: #0f5b34; }
-    .s4-r { flex: 1.1; display: flex; flex-direction: column; justify-content: center; gap: 1.5vh; }
-    .f-card { border-radius: 1vw; padding: 1.8vh 2vw; display: flex; gap: 1.2vw; align-items: flex-start; }
-    .f-icon { font-size: clamp(14px,1.5vw,22px); flex-shrink: 0; margin-top: 1px; }
-    .f-title { font-size: clamp(12px,1.25vw,18px); font-weight: 700; margin-bottom: 3px; }
-    .f-desc  { font-size: clamp(10px,1.05vw,14px); color: #555; line-height: 1.45; }
+    /* EKG animation for slide 1 */
+    @keyframes ekg {
+      0%   { stroke-dashoffset: 1000; }
+      100% { stroke-dashoffset: 0; }
+    }
+    .ekg-line {
+      stroke-dasharray: 1000;
+      stroke-dashoffset: 1000;
+      animation: ekg 3s ease-out infinite;
+    }
 
-    /* ═══════════════════════════════════════
-       SLIDE 5 · DOCTOR FEATURES
-    ═══════════════════════════════════════ */
-    .s5 { background: #eff6ff; color: #111; display: flex; gap: 5vw; padding: 6vh 8vw; }
-    .s5-l { flex: 1; display: flex; flex-direction: column; justify-content: center; }
-    .s5-l .lbl { color: #1d4ed8; }
-    .s5-l .head span { color: #1d4ed8; }
-    .s5-r { flex: 1.1; display: flex; flex-direction: column; justify-content: center; gap: 1.5vh; }
-    .s5 .f-desc { color: #334155; }
+    /* ══════════════════ SLIDE 1: TITLE ══════════════════ */
+    .s1 { background: #040d08; }
+    .s1-inner { width: 100%; height: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 6vh 10vw; position: relative; }
+    .s1-ekg { position: absolute; top: 50%; left: 0; width: 100%; transform: translateY(-50%); opacity: .05; }
+    .s1-hero { font-family: 'Syne', sans-serif; font-weight: 800; font-size: clamp(14px,2vw,30px); color: #4d6e5e; line-height: 1.7; margin-bottom: 3vh; }
+    .s1-hero span { color: #ecfdf5; font-size: clamp(22px,3.5vw,56px); display: block; letter-spacing: -.03em; line-height: 1.1; margin: 1.5vh 0; }
+    .s1-brand { font-family: 'Syne', sans-serif; font-weight: 800; font-size: clamp(28px,5vw,72px); color: #34d399; letter-spacing: -.03em; line-height: 1; margin-bottom: 3vh; }
+    .s1-sub { font-size: clamp(11px,1.1vw,16px); color: #4d6e5e; letter-spacing: .08em; text-transform: uppercase; }
 
-    /* ═══════════════════════════════════════
-       SLIDE 6 · PHARMACY FEATURES
-    ═══════════════════════════════════════ */
-    .s6 { background: #fffbeb; color: #111; display: flex; gap: 5vw; padding: 6vh 8vw; }
-    .s6-l { flex: 1; display: flex; flex-direction: column; justify-content: center; }
-    .s6-l .lbl { color: #92400e; }
-    .s6-l .head span { color: #d97706; }
-    .s6-r { flex: 1.2; display: flex; flex-direction: column; justify-content: center; gap: 1.5vh; }
-    .s6 .f-desc { color: #4b5563; }
-    .tier-row { border-radius: 1vw; padding: 1.5vh 2vw; display: flex; align-items: center; gap: 1.5vw; }
-    .tier-badge { width: clamp(28px,2.5vw,40px); height: clamp(28px,2.5vw,40px); border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
-    .tier-badge span { font-size: clamp(11px,1.1vw,16px); color: #fff; font-weight: 900; }
-    .tier-name  { font-size: clamp(13px,1.3vw,18px); font-weight: 800; }
-    .tier-range { font-size: clamp(10px,1vw,13px); color: #888; margin-left: 8px; font-weight: 600; }
-    .tier-perks { font-size: clamp(10px,1vw,14px); color: #555; line-height: 1.4; }
+    /* ══════════════════ SLIDE 2: PROBLEM ══════════════════ */
+    .s2 { background: #040d08; }
+    .s2-stat { font-family: 'Syne', sans-serif; font-weight: 800; font-size: clamp(28px,4.5vw,68px); color: #f87171; line-height: 1; margin-bottom: 1.2vh; }
+    .s2-card { background: #0c1c15; border: 1px solid #163324; border-radius: 1vw; padding: 2.5vh 2vw; }
+    .s2-card-title { font-size: clamp(12px,1.3vw,18px); font-weight: 700; color: #ecfdf5; margin-bottom: .8vh; line-height: 1.35; }
+    .s2-card-desc  { font-size: clamp(10px,1.05vw,14px); color: #4d6e5e; line-height: 1.55; }
+    .s2-quote { font-size: clamp(14px,1.7vw,26px); color: #6ee7b7; font-weight: 600; line-height: 1.5; margin-top: 3.5vh; text-align: center; }
 
-    /* ═══════════════════════════════════════
-       SLIDE 7 · WHATSAPP BOT
-    ═══════════════════════════════════════ */
-    .s7 { background: linear-gradient(145deg,#064e3b 0%,#0a3d2e 100%); display: flex; gap: 6vw; padding: 6vh 8vw; }
-    .s7 .orb { position: absolute; bottom:-10vh; right:-5vw; width: 38vw; height: 38vw; border-radius: 50%; background: rgba(16,185,129,.06); }
+    /* ══════════════════ SLIDE 3: WHY WIREFLUID ══════════════════ */
+    .s3 { background: #040d08; }
+    .s3-table { width: 100%; border-collapse: collapse; }
+    .s3-table th { font-size: clamp(10px,1.1vw,15px); font-weight: 700; text-transform: uppercase; letter-spacing: .08em; padding: 1.2vh 2vw; text-align: left; }
+    .s3-table th:first-child { color: #f87171; }
+    .s3-table th:last-child  { color: #34d399; }
+    .s3-table td { font-size: clamp(11px,1.2vw,17px); padding: 1.3vh 2vw; border-top: 1px solid #0c2818; }
+    .s3-table td:first-child { color: #4d6e5e; }
+    .s3-table td:last-child  { color: #6ee7b7; font-weight: 600; }
+    .s3-table tr:hover td { background: rgba(52,211,153,.03); }
+    .s3-box { margin-top: 3vh; background: rgba(52,211,153,.06); border: 1.5px solid rgba(52,211,153,.25); border-radius: 1vw; padding: 2vh 2.5vw; font-size: clamp(11px,1.2vw,17px); color: #6ee7b7; line-height: 1.6; }
+
+    /* ══════════════════ SLIDE 4: SOLUTION ══════════════════ */
+    .s4 { background: #040d08; }
+    .s4-inner { width: 100%; height: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 6vh 12vw; }
+    .s4-quote { font-family: 'Syne', sans-serif; font-weight: 800; font-size: clamp(24px,4.2vw,64px); color: #ecfdf5; line-height: 1.18; letter-spacing: -.025em; margin-bottom: 5vh; }
+    .s4-quote .g { color: #34d399; }
+    .s4-sub { font-size: clamp(12px,1.3vw,19px); color: #4d6e5e; letter-spacing: .02em; margin-bottom: 3.5vh; }
+    .s4-wf { display: inline-flex; align-items: center; gap: 1vw; background: #0c1c15; border: 1px solid #163324; border-radius: .8vw; padding: 1.2vh 2vw; }
+    .s4-wf span { font-size: clamp(11px,1.1vw,15px); color: #34d399; font-weight: 700; font-family: 'JetBrains Mono', monospace; }
+
+    /* ══════════════════ SLIDE 5: WIREFLUID POWERS EVERYTHING ══════════════════ */
+    .s5 { background: #040d08; }
+    .s5-card { background: #0c1c15; border: 1px solid #163324; border-radius: 1vw; padding: 2.2vh 2vw; }
+    .s5-icon { font-size: clamp(16px,1.8vw,26px); margin-bottom: 1vh; }
+    .s5-title { font-size: clamp(12px,1.3vw,18px); font-weight: 700; color: #ecfdf5; margin-bottom: .6vh; }
+    .s5-desc  { font-size: clamp(10px,1.05vw,14px); color: #4d6e5e; line-height: 1.5; }
+    .s5-bar   { margin-top: 3vh; background: rgba(52,211,153,.1); border: 1px solid rgba(52,211,153,.25); border-radius: .8vw; padding: 1.5vh 2.5vw; font-size: clamp(11px,1.15vw,16px); color: #6ee7b7; text-align: center; }
+
+    /* ══════════════════ SLIDE 6: LIVE DEMO ══════════════════ */
+    .s6 { background: #040d08; }
+    .s6-panel { background: #0c1c15; border: 1px solid #163324; border-radius: 1.2vw; overflow: hidden; display: flex; flex-direction: column; }
+    .s6-screen { flex: 1; background: #0a1a11; padding: 2vh 2vw; display: flex; flex-direction: column; justify-content: center; align-items: center; gap: .8vh; }
+    .s6-pill { background: rgba(52,211,153,.1); border: 1px solid rgba(52,211,153,.25); border-radius: .5vw; padding: .5vh 1.2vw; font-size: clamp(9px,.95vw,13px); color: #34d399; font-family: 'JetBrains Mono', monospace; font-weight: 700; }
+    .s6-code { font-family: 'Syne', sans-serif; font-weight: 800; font-size: clamp(18px,2.5vw,38px); color: #34d399; letter-spacing: .1em; }
+    .s6-valid { font-size: clamp(12px,1.3vw,19px); font-weight: 800; }
+    .s6-meta  { font-size: clamp(9px,1vw,13px); color: #4d6e5e; }
+    .s6-cap { padding: 1.2vh 1.5vw; background: #040d08; border-top: 1px solid #163324; font-size: clamp(9px,.95vw,12px); font-family: 'JetBrains Mono', monospace; color: #4d6e5e; }
+
+    /* ══════════════════ SLIDE 7: WHATSAPP ══════════════════ */
+    .s7 { background: #040d08; }
+    .s7-inner { width: 100%; height: 100%; display: flex; gap: 6vw; padding: 6vh 8vw; }
     .s7-l { flex: 1; display: flex; flex-direction: column; justify-content: center; }
-    .s7-l .lbl { color: #10b981; }
-    .s7-l .head { color: #fff; }
-    .s7-l .head span { color: #10b981; }
-    .s7-p { font-size: clamp(12px,1.3vw,18px); color: rgba(255,255,255,.65); line-height: 1.65; max-width: 90%; }
-    .s7-r { flex: 1.1; display: flex; flex-direction: column; justify-content: center; gap: 1.4vh; }
-    .cmd-row { background: rgba(255,255,255,.07); border: 1px solid rgba(255,255,255,.1); border-radius: .8vw; padding: 1.3vh 1.8vw; display: flex; gap: 1.5vw; align-items: center; }
-    .cmd-tag { background: #10b981; color: #fff; font-size: clamp(10px,1.05vw,14px); font-weight: 800; font-family: monospace; padding: 3px 10px; border-radius: 5px; white-space: nowrap; flex-shrink: 0; }
-    .cmd-desc { font-size: clamp(10px,1.1vw,15px); color: rgba(255,255,255,.75); line-height: 1.4; }
-    .s7-note { background: rgba(16,185,129,.12); border: 1px solid rgba(16,185,129,.25); border-radius: .8vw; padding: 1.5vh 1.8vw; display: flex; gap: 1vw; align-items: center; }
-    .s7-note span { font-size: clamp(10px,1.1vw,15px); color: rgba(255,255,255,.75); }
+    .s7-r { flex: 1; display: flex; align-items: center; justify-content: center; }
+    .whatsapp { background: #111b21; border-radius: 1.5vw; overflow: hidden; width: 100%; max-width: 380px; }
+    .wa-header { background: #1f2c34; padding: 1.5vh 2vw; display: flex; align-items: center; gap: 1vw; }
+    .wa-avatar { width: clamp(28px,2.5vw,40px); height: clamp(28px,2.5vw,40px); background: #34d399; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: clamp(12px,1.3vw,18px); flex-shrink: 0; }
+    .wa-name { font-size: clamp(12px,1.3vw,18px); font-weight: 700; color: #ecfdf5; }
+    .wa-status { font-size: clamp(10px,1vw,13px); color: #25d366; }
+    .wa-body { padding: 2vh 2vw; display: flex; flex-direction: column; gap: 1.5vh; background: #0d1418; }
+    .wa-out { align-self: flex-end; background: #005c4b; border-radius: 1vw 0 1vw 1vw; padding: 1vh 1.5vw; max-width: 85%; }
+    .wa-in  { align-self: flex-start; background: #1f2c34; border-radius: 0 1vw 1vw 1vw; padding: 1vh 1.5vw; max-width: 95%; }
+    .wa-text { font-size: clamp(11px,1.1vw,15px); color: #ecfdf5; line-height: 1.5; font-family: 'JetBrains Mono', monospace; }
+    .wa-time  { font-size: clamp(8px,.85vw,11px); color: #8696a0; margin-top: 3px; text-align: right; }
+    .s7-stat { font-size: clamp(11px,1.2vw,17px); color: #6ee7b7; line-height: 1.7; margin-top: 2vh; }
+    .s7-stat strong { color: #34d399; font-family: 'Syne', sans-serif; font-size: clamp(20px,2.5vw,38px); display: block; line-height: 1; }
 
-    /* ═══════════════════════════════════════
-       SLIDE 8 · SAFETY TOOLS
-    ═══════════════════════════════════════ */
-    .s8 { background: #fff; color: #111; display: flex; flex-direction: column; justify-content: center; padding: 6vh 8vw; }
-    .s8 .lbl { color: #7c3aed; }
-    .s8 .head span { color: #7c3aed; }
-    .s8-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 2vw; }
-    .s8-card { border-radius: 1.2vw; padding: 2.8vh 2.2vw; }
-    .s8-icon { font-size: clamp(18px,2.2vw,34px); margin-bottom: 1.5vh; }
-    .s8-title { font-size: clamp(13px,1.4vw,20px); font-weight: 800; color: #111; margin-bottom: 1vh; }
-    .s8-desc  { font-size: clamp(11px,1.1vw,15px); color: #555; line-height: 1.5; }
-    .s8-pill  { display: inline-block; border-radius: 100px; padding: 3px 10px; font-size: clamp(9px,.95vw,13px); font-weight: 700; margin-top: 1.2vh; }
+    /* ══════════════════ SLIDE 8: JUDGING CRITERIA ══════════════════ */
+    .s8 { background: #040d08; }
+    .s8-card { background: #0c1c15; border: 1px solid #163324; border-radius: 1vw; padding: 2.2vh 2vw; }
+    .s8-cat  { font-size: clamp(10px,1vw,14px); font-weight: 800; color: #34d399; text-transform: uppercase; letter-spacing: .08em; margin-bottom: 1.2vh; }
+    .s8-row  { display: flex; align-items: flex-start; gap: .6vw; font-size: clamp(10px,1.05vw,14px); color: #6ee7b7; margin-bottom: .5vh; line-height: 1.4; }
+    .s8-check { color: #34d399; font-weight: 800; flex-shrink: 0; }
 
-    /* ═══════════════════════════════════════
-       SLIDE 9 · ADMIN / DRAP PORTAL
-    ═══════════════════════════════════════ */
-    .s9 { background: #1a1a2e; display: flex; flex-direction: column; justify-content: center; padding: 6vh 8vw; }
-    .s9 .lbl { color: #818cf8; }
-    .s9 .head { color: #fff; max-width: 80%; }
-    .s9 .head span { color: #818cf8; }
-    .s9-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 1.8vw; }
-    .s9-card { background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.1); border-radius: 1vw; padding: 2.2vh 1.8vw; }
-    .s9-icon { font-size: clamp(18px,2vw,30px); margin-bottom: 1.2vh; }
-    .s9-title { font-size: clamp(12px,1.3vw,18px); font-weight: 800; color: #fff; margin-bottom: .8vh; }
-    .s9-desc  { font-size: clamp(10px,1.05vw,14px); color: rgba(255,255,255,.55); line-height: 1.5; }
+    /* ══════════════════ SLIDE 9: 5 ROLES ══════════════════ */
+    .s9 { background: #040d08; }
+    .s9-center { background: rgba(52,211,153,.08); border: 2px solid #34d399; border-radius: 50%; width: clamp(70px,6vw,110px); height: clamp(70px,6vw,110px); display: flex; align-items: center; justify-content: center; font-family: 'Syne', sans-serif; font-weight: 800; font-size: clamp(11px,1.2vw,17px); color: #34d399; text-align: center; line-height: 1.2; }
+    .s9-hub { display: flex; align-items: center; justify-content: center; gap: 2vw; margin: 3vh 0; }
+    .s9-role { background: #0c1c15; border: 1px solid #163324; border-radius: 1vw; padding: 2vh 1.8vw; }
+    .s9-role-name { font-size: clamp(12px,1.3vw,19px); font-weight: 800; color: #34d399; margin-bottom: .6vh; }
+    .s9-role-desc { font-size: clamp(10px,1.05vw,14px); color: #4d6e5e; line-height: 1.5; }
+    .s9-roles-grid { display: grid; grid-template-columns: repeat(5,1fr); gap: 1.5vw; margin-top: 3vh; }
+    .s9-arrow { color: #163324; font-size: clamp(14px,1.5vw,22px); }
 
-    /* ═══════════════════════════════════════
-       SLIDE 10 · MARKET
-    ═══════════════════════════════════════ */
-    .s10 { background: #f8f9fa; color: #111; display: flex; gap: 5vw; padding: 6vh 8vw; }
-    .s10-l { flex: 1.1; display: flex; flex-direction: column; justify-content: center; }
-    .s10-l .lbl { color: #0f5b34; }
-    .s10-l .head span { color: #0f5b34; }
-    .s10-rows { display: flex; flex-direction: column; gap: 1.5vh; }
-    .s10-row  { display: flex; align-items: center; gap: 2vw; background: #fff; border: 1px solid #e5e7eb; border-radius: .8vw; padding: 1.4vh 2vw; }
-    .s10-rtxt { flex: 1; }
-    .s10-rlbl { font-size: clamp(10px,1.05vw,14px); color: #888; margin-bottom: 3px; }
-    .s10-rsub { font-size: clamp(10px,1.1vw,15px); color: #555; line-height: 1.4; }
-    .s10-rval { font-size: clamp(16px,2.1vw,32px); font-weight: 900; flex-shrink: 0; text-align: right; }
-    .s10-r { flex: .9; display: flex; flex-direction: column; justify-content: center; gap: 1.5vh; }
-    .s10-rev { background: #fff; border: 1.5px solid #e5e7eb; border-radius: 1.2vw; padding: 2.5vh 2.2vw; }
-    .s10-rtitle { font-size: clamp(10px,1vw,14px); font-weight: 700; color: #888; margin-bottom: 1.5vh; text-transform: uppercase; letter-spacing: .08em; }
-    .s10-rrow { display: flex; justify-content: space-between; align-items: flex-start; padding: 1.1vh 0; border-bottom: 1px solid #f3f4f6; gap: 1vw; }
-    .s10-rrow:last-child { border-bottom: none; }
-    .s10-rmod { font-size: clamp(12px,1.2vw,17px); font-weight: 700; color: #111; }
-    .s10-rdsc { font-size: clamp(10px,1.05vw,14px); color: #555; text-align: right; max-width: 55%; }
+    /* ══════════════════ SLIDE 10: ARCHITECTURE ══════════════════ */
+    .s10 { background: #040d08; }
+    .s10-flow { display: flex; flex-direction: column; gap: 1.5vh; }
+    .s10-row { display: flex; align-items: stretch; gap: 1.5vw; }
+    .s10-actor { background: rgba(52,211,153,.06); border: 1px solid rgba(52,211,153,.2); border-radius: .8vw; padding: 1.2vh 1.5vw; font-family: 'Syne', sans-serif; font-weight: 800; font-size: clamp(11px,1.2vw,17px); color: #34d399; white-space: nowrap; display: flex; align-items: center; min-width: 8vw; justify-content: center; }
+    .s10-arrow { display: flex; align-items: center; color: #163324; font-size: clamp(12px,1.3vw,18px); }
+    .s10-step { background: #0c1c15; border: 1px solid #163324; border-radius: .8vw; padding: 1.2vh 1.5vw; font-size: clamp(10px,1.05vw,14px); color: #6ee7b7; flex: 1; display: flex; align-items: center; }
+    .s10-contracts { background: rgba(52,211,153,.06); border: 1.5px solid rgba(52,211,153,.2); border-radius: 1vw; padding: 2vh 2vw; display: grid; grid-template-columns: repeat(2,1fr); gap: .5vh 2vw; margin-top: 2vh; }
+    .s10-contract { font-family: 'JetBrains Mono', monospace; font-size: clamp(9px,.95vw,13px); color: #34d399; }
 
-    /* ═══════════════════════════════════════
-       SLIDE 11 · ASK
-    ═══════════════════════════════════════ */
-    .s11 { background: linear-gradient(140deg,#0c4a3f 0%,#064e3b 50%,#022c22 100%); display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 7vh 10vw; text-align: center; }
-    .s11 .orb1 { position: absolute; top:-10%; left:-5%; width: 28vw; height: 28vw; border-radius: 50%; background: rgba(16,185,129,.08); }
-    .s11 .orb2 { position: absolute; bottom:-10%; right:-5%; width: 32vw; height: 32vw; border-radius: 50%; background: rgba(16,185,129,.06); }
-    .s11 .lbl { color: #10b981; }
-    .s11 .head { color: #fff; }
-    .s11 .head span { color: #10b981; }
-    .s11-p { font-size: clamp(12px,1.45vw,21px); color: rgba(255,255,255,.62); max-width: 62%; line-height: 1.65; margin-bottom: 4.5vh; }
-    .s11-goals { display: grid; grid-template-columns: repeat(4,1fr); gap: 1.5vw; width: 100%; max-width: 88%; margin-bottom: 3.5vh; }
-    .s11-goal { background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.12); border-radius: 1vw; padding: 2.2vh 1.5vw; }
-    .s11-gn { font-size: clamp(18px,2.5vw,40px); font-weight: 900; color: #10b981; line-height: 1; margin-bottom: .8vh; }
-    .s11-gl { font-size: clamp(11px,1.15vw,16px); font-weight: 700; color: #fff; margin-bottom: .4vh; }
-    .s11-gd { font-size: clamp(9px,.95vw,13px); color: rgba(255,255,255,.5); }
-    .s11-qt { font-size: clamp(11px,1.2vw,17px); color: rgba(255,255,255,.45); font-style: italic; }
+    /* ══════════════════ SLIDE 11: COMPETITIVE ADVANTAGE ══════════════════ */
+    .s11 { background: #040d08; }
+    .s11-card { background: #0c1c15; border: 1px solid #163324; border-radius: 1vw; padding: 2.5vh 2.5vw; }
+    .s11-cat  { font-size: clamp(10px,1vw,14px); font-weight: 800; color: #34d399; text-transform: uppercase; letter-spacing: .08em; margin-bottom: 1.5vh; }
+    .s11-row  { display: flex; align-items: flex-start; gap: .6vw; font-size: clamp(10px,1.05vw,15px); color: #6ee7b7; margin-bottom: .7vh; }
+    .s11-dot  { color: #34d399; flex-shrink: 0; }
+    .s11-bottom { margin-top: 3vh; background: rgba(52,211,153,.06); border: 1.5px solid rgba(52,211,153,.25); border-radius: 1vw; padding: 2vh 3vw; font-size: clamp(13px,1.5vw,22px); font-weight: 700; color: #6ee7b7; text-align: center; }
+
+    /* ══════════════════ SLIDE 12: CLOSE ══════════════════ */
+    .s12 { background: #040d08; }
+    .s12-inner { width: 100%; height: 100%; display: flex; flex-direction: column; justify-content: center; padding: 6vh 8vw; }
+    .s12-2col { display: grid; grid-template-columns: 1fr 1fr; gap: 4vw; margin: 3vh 0; }
+    .s12-col { background: #0c1c15; border: 1px solid #163324; border-radius: 1.2vw; padding: 2.5vh 2.5vw; }
+    .s12-col-title { font-family: 'Syne', sans-serif; font-weight: 800; font-size: clamp(11px,1.2vw,17px); text-transform: uppercase; letter-spacing: .08em; margin-bottom: 1.5vh; }
+    .s12-row { display: flex; align-items: flex-start; gap: .8vw; font-size: clamp(11px,1.15vw,16px); color: #6ee7b7; margin-bottom: .9vh; line-height: 1.4; }
+    .s12-done { color: #34d399; }
+    .s12-next { color: #fbbf24; }
+    .s12-bottom { text-align: center; }
+    .s12-vision { font-family: 'Syne', sans-serif; font-weight: 800; font-size: clamp(14px,1.8vw,28px); color: #ecfdf5; line-height: 1.35; }
+    .s12-addr { font-family: 'JetBrains Mono', monospace; font-size: clamp(8px,.8vw,11px); color: #163324; margin-top: 2vh; }
   </style>
 </head>
 <body>
@@ -231,353 +238,437 @@
     <div id="tabs"></div>
     <div id="nav">
       <button id="prevBtn" onclick="go(-1)">&#8592;</button>
-      <span id="counter">1 / 11</span>
+      <span id="counter">1/12</span>
       <button id="nextBtn" onclick="go(1)">&#8594;</button>
     </div>
-    <button id="fsBtn" onclick="toggleFS()">&#9974; Fullscreen</button>
-    <div class="hint">Arrow keys &middot; F</div>
+    <button id="fsBtn" onclick="toggleFS()">&#9974; Full</button>
   </div>
 
   <div id="wrap">
 
-    <!-- ── 1. TITLE ── -->
+    <!-- ══════ 1. TITLE ══════ -->
     <div class="slide s1 active">
-      <div class="orb1"></div><div class="orb2"></div>
-      <div class="s1-logo">
-        <div class="s1-dot">
-          <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
-          </svg>
+      <!-- EKG SVG background -->
+      <svg class="s1-ekg" height="80" viewBox="0 0 1200 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <polyline class="ekg-line" points="0,40 120,40 160,40 180,10 200,70 220,5 240,75 260,40 400,40 520,40 560,40 580,20 600,60 620,15 640,65 660,40 800,40 920,40 960,40 980,18 1000,62 1020,10 1040,70 1060,40 1200,40"
+          stroke="#34d399" stroke-width="2" fill="none" />
+      </svg>
+      <div class="s1-inner">
+        <div class="slide-badge">⭐ Entangled Hackathon 2026 &middot; WireFluid Network &middot; 10M PKR Prize Pool</div>
+        <div class="s1-hero">
+          Pakistan has 230 million people.<br>
+          <span>Zero of them own their medical records.</span>
         </div>
-        <span class="s1-brand">PrivyHealth Pakistan</span>
+        <div class="s1-brand">PrivyHealth Pakistan</div>
+        <div class="s1-sub">Encrypted &middot; Patient-Owned &middot; WireFluid Blockchain</div>
       </div>
-      <h1 class="s1-h1">Pakistan's complete<br>digital health <span>platform</span></h1>
-      <p class="s1-sub">Blockchain-powered prescription verification, patient records, pharmacy compliance, doctor tools, and DRAP reporting — built for 230 million people.</p>
-      <div class="s1-badges">
-        <div class="s1-badge"><span>DRAP Compliant</span></div>
-        <div class="s1-badge"><span>WireFluid Network</span></div>
-        <div class="s1-badge"><span>WhatsApp-First</span></div>
-        <div class="s1-badge"><span>Urdu &amp; English</span></div>
-      </div>
-      <div class="s1-stats">
-        <div class="s1-stat"><div class="s1-stat-n">4</div><div class="s1-stat-l">User Types</div></div>
-        <div class="s1-stat"><div class="s1-stat-n">16+</div><div class="s1-stat-l">Features</div></div>
-        <div class="s1-stat"><div class="s1-stat-n">WhatsApp</div><div class="s1-stat-l">Zero-app verify</div></div>
-        <div class="s1-stat"><div class="s1-stat-n">230M</div><div class="s1-stat-l">Pakistanis</div></div>
-      </div>
+      <div class="wf-mark">WireFluid Network</div>
+      <div class="slide-num">01 / 12</div>
     </div>
 
-    <!-- ── 2. PROBLEM ── -->
+    <!-- ══════ 2. PROBLEM ══════ -->
     <div class="slide s2">
-      <div class="lbl">The Problem</div>
-      <h2 class="head">Pakistan's health system is <span>dangerously broken</span></h2>
-      <div class="s2-grid">
-        <div class="s2-card" style="background:#fef2f2;border:1px solid #fca5a5">
-          <div class="s2-stat red">95%</div>
-          <div class="s2-title">pharmacies have no qualified pharmacist</div>
-          <div class="s2-det">Shopkeepers dispense antibiotics and controlled substances freely, with zero verification</div>
+      <div class="slide-inner">
+        <div class="slide-badge">&#9888; The Crisis</div>
+        <h2 class="slide-title">Pakistan's healthcare data crisis</h2>
+        <div class="g3col">
+          <div class="s2-card">
+            <div class="s2-stat">&#x20A8;500B</div>
+            <div class="s2-card-title">lost annually to healthcare fraud</div>
+            <div class="s2-card-desc">Forged prescriptions, duplicate claims, and falsified records drain Pakistan's health system every year</div>
+          </div>
+          <div class="s2-card">
+            <div class="s2-stat">95%</div>
+            <div class="s2-card-title">of pharmacies have no qualified pharmacist</div>
+            <div class="s2-card-desc">Shopkeepers dispense antibiotics and controlled substances freely — no verification, no records</div>
+          </div>
+          <div class="s2-card">
+            <div class="s2-stat" style="color:#fbbf24">1 in 3</div>
+            <div class="s2-card-title">Pakistanis has had records lost or stolen</div>
+            <div class="s2-card-desc">Paper records are destroyed, hospitals lose data, patients have no backup of their own history</div>
+          </div>
         </div>
-        <div class="s2-card" style="background:#fffbeb;border:1px solid #fcd34d">
-          <div class="s2-stat amber">XDR</div>
-          <div class="s2-title">typhoid crisis from antibiotic overuse</div>
-          <div class="s2-det">Pakistan declared a global health emergency caused directly by freely dispensed antibiotics</div>
-        </div>
-        <div class="s2-card" style="background:#f5f3ff;border:1px solid #c4b5fd">
-          <div class="s2-stat purple">100k+</div>
-          <div class="s2-title">unlicensed medicine shops nationwide</div>
-          <div class="s2-det">QR code apps fail — most shopkeepers own basic Android phones with no scanner app installed</div>
-        </div>
+        <div class="s2-quote">"When your records are on paper, anyone can forge them. And they do."</div>
       </div>
+      <div class="wf-mark">WireFluid Network</div>
+      <div class="slide-num">02 / 12</div>
     </div>
 
-    <!-- ── 3. FULL PLATFORM MAP ── -->
+    <!-- ══════ 3. WHY WIREFLUID ══════ -->
     <div class="slide s3">
-      <div class="lbl">Complete Platform</div>
-      <h2 class="head">One platform. <span>Four roles. Every need covered.</span></h2>
-      <div class="s3-grid">
-        <!-- Patient -->
-        <div class="s3-col" style="background:rgba(16,185,129,.08);border:1px solid rgba(16,185,129,.2)">
-          <div class="s3-col-head green">&#128100; Patient</div>
-          <div class="s3-feat"><span class="green">&#8226;</span> View active prescriptions</div>
-          <div class="s3-feat"><span class="green">&#8226;</span> Encrypted health records</div>
-          <div class="s3-feat"><span class="green">&#8226;</span> Drug interaction checker</div>
-          <div class="s3-feat"><span class="green">&#8226;</span> Medicine price comparator</div>
-          <div class="s3-feat"><span class="green">&#8226;</span> Print &amp; WhatsApp Rx share</div>
-          <div class="s3-feat"><span class="green">&#8226;</span> Emergency QR access</div>
-        </div>
-        <!-- Doctor -->
-        <div class="s3-col" style="background:rgba(37,99,235,.08);border:1px solid rgba(37,99,235,.2)">
-          <div class="s3-col-head blue">&#129658; Doctor</div>
-          <div class="s3-feat"><span class="blue">&#8226;</span> Digital prescription pad</div>
-          <div class="s3-feat"><span class="blue">&#8226;</span> DRAP category auto-assign</div>
-          <div class="s3-feat"><span class="blue">&#8226;</span> Refill management (0–3)</div>
-          <div class="s3-feat"><span class="blue">&#8226;</span> PMDC-verified doctor profile</div>
-          <div class="s3-feat"><span class="blue">&#8226;</span> Prescription history dashboard</div>
-          <div class="s3-feat"><span class="blue">&#8226;</span> Doctor directory &amp; booking</div>
-        </div>
-        <!-- Pharmacy -->
-        <div class="s3-col" style="background:rgba(217,119,6,.08);border:1px solid rgba(217,119,6,.2)">
-          <div class="s3-col-head amber">&#127968; Pharmacy</div>
-          <div class="s3-feat"><span class="amber">&#8226;</span> 6-digit code verification</div>
-          <div class="s3-feat"><span class="amber">&#8226;</span> WhatsApp verify (no app)</div>
-          <div class="s3-feat"><span class="amber">&#8226;</span> Anti-double-fill lock</div>
-          <div class="s3-feat"><span class="amber">&#8226;</span> Allergy alert on dispense</div>
-          <div class="s3-feat"><span class="amber">&#8226;</span> 3-tier reward system</div>
-          <div class="s3-feat"><span class="amber">&#8226;</span> Controlled Rx unlocked at Premium</div>
-        </div>
-        <!-- Admin/DRAP -->
-        <div class="s3-col" style="background:rgba(129,140,248,.08);border:1px solid rgba(129,140,248,.2)">
-          <div class="s3-col-head purple">&#128202; Admin / DRAP</div>
-          <div class="s3-feat"><span class="purple">&#8226;</span> System-wide analytics</div>
-          <div class="s3-feat"><span class="purple">&#8226;</span> DRAP schedule reporting</div>
-          <div class="s3-feat"><span class="purple">&#8226;</span> Monthly compliance export</div>
-          <div class="s3-feat"><span class="purple">&#8226;</span> Pharmacy registry &amp; audit</div>
-          <div class="s3-feat"><span class="purple">&#8226;</span> Prescription fill-rate tracking</div>
-          <div class="s3-feat"><span class="purple">&#8226;</span> WireFluid network status</div>
+      <div class="slide-inner">
+        <div class="slide-badge">&#9672; Technical Argument</div>
+        <h2 class="slide-title">Why this cannot be built <span class="g">without WireFluid</span></h2>
+        <table class="s3-table">
+          <thead>
+            <tr>
+              <th>&#10005; Traditional Database</th>
+              <th>&#10003; WireFluid Blockchain</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>Hospital owns your records</td><td>You own your health record NFT — forever</td></tr>
+            <tr><td>Anyone can alter paper records</td><td>Immutable on-chain — mathematically impossible to alter</td></tr>
+            <tr><td>No prescription history</td><td>Every prescription permanently recorded on-chain</td></tr>
+            <tr><td>Forgeries undetectable</td><td>6-digit code verified against WireFluid in 2 seconds</td></tr>
+            <tr><td>Database can be hacked or shut down</td><td>Decentralized — no single point of failure</td></tr>
+          </tbody>
+        </table>
+        <div class="s3-box">
+          "The tamper-proof nature of WireFluid blockchain is not a feature — it is the entire premise. A centralized database can be hacked, altered, or destroyed. An immutable blockchain record cannot."
         </div>
       </div>
+      <div class="wf-mark">WireFluid Network</div>
+      <div class="slide-num">03 / 12</div>
     </div>
 
-    <!-- ── 4. PATIENT FEATURES ── -->
+    <!-- ══════ 4. SOLUTION ══════ -->
     <div class="slide s4">
-      <div class="s4-l">
-        <div class="lbl">Patient Portal</div>
-        <h2 class="head">Patients own their<br>health data. <span>Forever.</span></h2>
-        <p style="font-size:clamp(12px,1.3vw,18px);color:#444;line-height:1.65;max-width:90%">Every prescription, every record, stored on the WireFluid secure network — encrypted, patient-owned, accessible anywhere via 6-digit code or QR.</p>
-      </div>
-      <div class="s4-r">
-        <div class="f-card" style="background:#f0fdf4;border:1px solid #86efac">
-          <div class="f-icon">&#128203;</div>
-          <div><div class="f-title" style="color:#0f5b34">Active Prescription Dashboard</div><div class="f-desc">View all active, filled, and expired prescriptions. See days remaining, refill count, and one-tap pharmacy share.</div></div>
+      <div class="s4-inner">
+        <div class="s4-quote">
+          "Your medical records.<br>
+          <span class="g">Encrypted</span> in your browser.<br>
+          <span class="g">Owned by you</span> as an NFT.<br>
+          On <span class="g">WireFluid</span> — forever."
         </div>
-        <div class="f-card" style="background:#f0fdf4;border:1px solid #86efac">
-          <div class="f-icon">&#128247;</div>
-          <div><div class="f-title" style="color:#0f5b34">Print &amp; WhatsApp Share</div><div class="f-desc">Generate a printable DRAP-formatted prescription or send the code directly via WhatsApp to any pharmacist.</div></div>
-        </div>
-        <div class="f-card" style="background:#f0fdf4;border:1px solid #86efac">
-          <div class="f-icon">&#128680;</div>
-          <div><div class="f-title" style="color:#0f5b34">Emergency QR Access</div><div class="f-desc">Scan patient's emergency QR without login — blood type and allergies visible instantly in any emergency.</div></div>
-        </div>
-        <div class="f-card" style="background:#f0fdf4;border:1px solid #86efac">
-          <div class="f-icon">&#128196;</div>
-          <div><div class="f-title" style="color:#0f5b34">Encrypted Health Records</div><div class="f-desc">Full medical history secured on WireFluid network. Patients control access — no hospital can lock them out.</div></div>
+        <div class="s4-sub">5 roles &middot; 10 smart contracts &middot; Complete healthcare ecosystem</div>
+        <div class="s4-wf">
+          <span>&#9654; Powered by WireFluid Network</span>
         </div>
       </div>
+      <div class="wf-mark">WireFluid Network</div>
+      <div class="slide-num">04 / 12</div>
     </div>
 
-    <!-- ── 5. DOCTOR FEATURES ── -->
+    <!-- ══════ 5. WIREFLUID POWERS EVERYTHING ══════ -->
     <div class="slide s5">
-      <div class="s5-l">
-        <div class="lbl">Doctor Portal</div>
-        <h2 class="head">Digital prescribing.<br><span>PMDC-verified.</span> Legally sound.</h2>
-        <p style="font-size:clamp(12px,1.3vw,18px);color:#334155;line-height:1.65;max-width:90%">Every prescription carries the doctor's PMDC licence number, is timestamped on WireFluid, and is automatically categorised by DRAP schedule — creating an unforgeable legal record.</p>
+      <div class="slide-inner">
+        <div class="slide-badge">&#9670; Every Feature on WireFluid</div>
+        <h2 class="slide-title">WireFluid is used for <span class="g">everything</span> — not just storage</h2>
+        <div class="g2col" style="grid-template-columns: repeat(3,1fr)">
+          <div class="s5-card"><div class="s5-icon">&#128274;</div><div class="s5-title">Health Record NFT</div><div class="s5-desc">Minted on WireFluid — patient-owned, encrypted, permanent</div></div>
+          <div class="s5-card"><div class="s5-icon">&#128138;</div><div class="s5-title">Prescription Verification</div><div class="s5-desc">6-digit code &rarr; WireFluid verifyByCode() &rarr; result in 2s</div></div>
+          <div class="s5-card"><div class="s5-icon">&#128680;</div><div class="s5-title">Emergency Card</div><div class="s5-desc">Access logged on-chain — every ER scan is auditable forever</div></div>
+          <div class="s5-card"><div class="s5-icon">&#127968;</div><div class="s5-title">Hospital Registry</div><div class="s5-desc">Institution approvals and doctor verifications recorded on-chain</div></div>
+          <div class="s5-card"><div class="s5-icon">&#129658;</div><div class="s5-title">Doctor Verification</div><div class="s5-desc">PMDC check confirmed on WireFluid — unforgeable credential</div></div>
+          <div class="s5-card"><div class="s5-icon">&#128221;</div><div class="s5-title">Immutable Audit Trail</div><div class="s5-desc">Every data access permanently logged — patients see all history</div></div>
+        </div>
+        <div class="s5-bar">Every action generates a WireFluid transaction &middot; Verifiable at explorer.wirefluid.com</div>
       </div>
-      <div class="s5-r">
-        <div class="f-card" style="background:#dbeafe;border:1px solid #93c5fd">
-          <div class="f-icon">&#129399;</div>
-          <div><div class="f-title" style="color:#1d4ed8">Digital Prescription Pad</div><div class="f-desc">Search medicines, set dosage, frequency, duration, refills (0–3), allergy alerts, and DRAP category in one screen.</div></div>
-        </div>
-        <div class="f-card" style="background:#dbeafe;border:1px solid #93c5fd">
-          <div class="f-icon">&#127775;</div>
-          <div><div class="f-title" style="color:#1d4ed8">PMDC-Verified Profile</div><div class="f-desc">Patients and pharmacies see the doctor's verified PMDC licence number on every prescription — builds trust instantly.</div></div>
-        </div>
-        <div class="f-card" style="background:#dbeafe;border:1px solid #93c5fd">
-          <div class="f-icon">&#128269;</div>
-          <div><div class="f-title" style="color:#1d4ed8">Doctor Directory</div><div class="f-desc">Searchable by specialty and city. Patients see availability and can book directly. Doctors build a verified digital reputation.</div></div>
-        </div>
-        <div class="f-card" style="background:#dbeafe;border:1px solid #93c5fd">
-          <div class="f-icon">&#128200;</div>
-          <div><div class="f-title" style="color:#1d4ed8">Prescription Analytics</div><div class="f-desc">See today's count, total issued, and fill rate. Track which prescriptions have been dispensed and which are pending.</div></div>
-        </div>
-      </div>
+      <div class="wf-mark">WireFluid Network</div>
+      <div class="slide-num">05 / 12</div>
     </div>
 
-    <!-- ── 6. PHARMACY FEATURES ── -->
+    <!-- ══════ 6. LIVE DEMO ══════ -->
     <div class="slide s6">
-      <div class="s6-l">
-        <div class="lbl">Pharmacy Portal</div>
-        <h2 class="head">Pharmacies that verify<br>earn <span>more patients.</span></h2>
-        <p style="font-size:clamp(12px,1.3vw,18px);color:#4b5563;line-height:1.65;max-width:90%">Instead of forcing compliance, PrivyHealth makes pharmacies compete to reach higher tiers — because Premium pharmacies unlock controlled-substance prescriptions and get patient referrals.</p>
+      <div class="slide-inner">
+        <div class="slide-badge">&#9654; Working on WireFluid Testnet</div>
+        <h2 class="slide-title">Live demo — <span class="g">working right now</span></h2>
+        <div class="g3col">
+          <!-- Panel 1: Patient Record -->
+          <div class="s6-panel">
+            <div class="s6-screen">
+              <div class="s6-pill">Health Record NFT</div>
+              <div style="font-family:'Syne',sans-serif;font-weight:800;font-size:clamp(24px,3vw,46px);color:#34d399">#48</div>
+              <div style="font-size:clamp(10px,1.1vw,15px);color:#6ee7b7;font-weight:700">B+ Blood Type</div>
+              <div style="font-size:clamp(9px,1vw,13px);color:#f87171;font-weight:700">&#9888; Penicillin Allergy</div>
+              <div style="font-size:clamp(9px,.9vw,12px);color:#4d6e5e;text-align:center">Patient Dashboard</div>
+            </div>
+            <div class="s6-cap">NFT minted on WireFluid &middot; Block #1,247,891</div>
+          </div>
+          <!-- Panel 2: Prescription code -->
+          <div class="s6-panel">
+            <div class="s6-screen">
+              <div class="s6-pill">Prescription Code</div>
+              <div class="s6-code">PK-7X4M2K</div>
+              <div style="font-size:clamp(10px,1.1vw,15px);color:#6ee7b7">Augmentin 625mg</div>
+              <div style="font-size:clamp(9px,1vw,13px);color:#4d6e5e">Dr. Ahmed Khan · PMDC &#10003;</div>
+              <div style="font-size:clamp(9px,.9vw,12px);color:#4d6e5e">Expires April 12, 2026</div>
+            </div>
+            <div class="s6-cap">Prescription NFT #103 &middot; WireFluid Explorer &#8599;</div>
+          </div>
+          <!-- Panel 3: Verify result -->
+          <div class="s6-panel">
+            <div class="s6-screen">
+              <div class="s6-pill">Pharmacy Verification</div>
+              <div class="s6-valid" style="color:#34d399">&#10003; VALID</div>
+              <div style="font-size:clamp(10px,1.1vw,15px);color:#ecfdf5;font-weight:700">AUGMENTIN 625mg</div>
+              <div style="font-size:clamp(9px,1vw,13px);color:#6ee7b7">2x daily &middot; 5 days</div>
+              <div style="font-size:clamp(9px,.9vw,12px);color:#f87171">&#9888; Penicillin — confirm with patient</div>
+            </div>
+            <div class="s6-cap">verifyByCode() called &middot; 2.3 second response</div>
+          </div>
+        </div>
+        <div style="margin-top:2vh;text-align:center;font-family:'JetBrains Mono',monospace;font-size:clamp(9px,.9vw,12px);color:#163324">
+          Deployed on WireFluid &middot; All contracts verifiable at explorer.wirefluid.com
+        </div>
       </div>
-      <div class="s6-r">
-        <div class="f-card" style="background:#fef3c7;border:1px solid #fcd34d;margin-bottom:.5vh">
-          <div class="f-icon">&#9989;</div>
-          <div><div class="f-title" style="color:#92400e">6-Digit + WhatsApp Verification</div><div class="f-desc">Type the code in the app OR send "verify PK-7X4M2K" on WhatsApp — full prescription details returned instantly.</div></div>
-        </div>
-        <div class="f-card" style="background:#fef3c7;border:1px solid #fcd34d;margin-bottom:.5vh">
-          <div class="f-icon">&#128274;</div>
-          <div><div class="f-title" style="color:#92400e">Anti-Fraud Double-Fill Lock</div><div class="f-desc">Once dispensed, the prescription is permanently locked on WireFluid — the same code can never be filled twice.</div></div>
-        </div>
-        <div style="display:flex;flex-direction:column;gap:1vh">
-          <div class="tier-row" style="background:#fef9c3;border:1.5px solid #fcd34d">
-            <div class="tier-badge" style="background:#d97706"><span>&#9733;</span></div>
-            <div><div style="display:flex;align-items:center"><span class="tier-name amber">Premium</span><span class="tier-range">500+ verifications</span></div><div class="tier-perks">Controlled substances unlocked &bull; Priority listing &bull; Referral traffic</div></div>
-          </div>
-          <div class="tier-row" style="background:#eff6ff;border:1.5px solid #bfdbfe">
-            <div class="tier-badge" style="background:#2563eb"><span>&#10003;</span></div>
-            <div><div style="display:flex;align-items:center"><span class="tier-name blue">Verified</span><span class="tier-range">100+ verifications</span></div><div class="tier-perks">Featured listing &bull; All standard medicines &bull; Patient referrals</div></div>
-          </div>
-          <div class="tier-row" style="background:#f9fafb;border:1.5px solid #e5e7eb">
-            <div class="tier-badge" style="background:#9ca3af"><span>&#9702;</span></div>
-            <div><div style="display:flex;align-items:center"><span class="tier-name" style="color:#6b7280">Basic</span><span class="tier-range">0–99 verifications</span></div><div class="tier-perks">OTC and Schedule H only &bull; Earns verification credits</div></div>
-          </div>
-        </div>
-      </div>
+      <div class="wf-mark">WireFluid Network</div>
+      <div class="slide-num">06 / 12</div>
     </div>
 
-    <!-- ── 7. WHATSAPP BOT ── -->
+    <!-- ══════ 7. WHATSAPP ══════ -->
     <div class="slide s7">
-      <div class="orb"></div>
-      <div class="s7-l">
-        <div class="lbl">WhatsApp Bot</div>
-        <h2 class="head" style="color:#fff">Zero training.<br><span>Zero app download.</span></h2>
-        <p class="s7-p">Pharmacists with basic Android phones send one WhatsApp message and receive full prescription details — no app to install, no QR scanner, no training required. Works on every phone in Pakistan.</p>
+      <div class="s7-inner">
+        <div class="s7-l">
+          <div class="slide-badge">&#128241; The X-Factor</div>
+          <h2 class="slide-title" style="max-width:90%">Pharmacists don't need an app.<br>They need <span class="g">WhatsApp.</span></h2>
+          <div class="s7-stat">
+            <strong>95%</strong>of pharmacies have no smartphone app
+          </div>
+          <div class="s7-stat">
+            <strong>100%</strong>have WhatsApp
+          </div>
+          <div style="margin-top:2.5vh;font-size:clamp(12px,1.3vw,18px);color:#6ee7b7;line-height:1.65">
+            WireFluid verification.<br>WhatsApp interface.<br>Zero training. Zero app download.
+          </div>
+        </div>
+        <div class="s7-r">
+          <div class="whatsapp">
+            <div class="wa-header">
+              <div class="wa-avatar">&#128138;</div>
+              <div><div class="wa-name">PrivyHealth PK Bot</div><div class="wa-status">&#9679; Online</div></div>
+            </div>
+            <div class="wa-body">
+              <div class="wa-out">
+                <div class="wa-text">verify PK-7X4M2K</div>
+                <div class="wa-time">14:31 &#10003;&#10003;</div>
+              </div>
+              <div class="wa-in">
+                <div class="wa-text">
+                  &#10003; VALID PRESCRIPTION<br><br>
+                  AUGMENTIN 625mg<br>
+                  Dr. Ahmed Khan &#10003; PMDC verified<br>
+                  2x daily &times; 5 days<br>
+                  Expires: April 12, 2026<br><br>
+                  &#9888; Patient allergy: PENICILLIN<br>
+                  Reply 'fill PK-7X4M2K' to confirm
+                </div>
+                <div class="wa-time">14:31</div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
-      <div class="s7-r">
-        <div class="cmd-row">
-          <div class="cmd-tag">verify [CODE]</div>
-          <div class="cmd-desc">Returns medicine name, dosage, doctor, expiry, and allergy alerts instantly</div>
-        </div>
-        <div class="cmd-row">
-          <div class="cmd-tag">fill [CODE]</div>
-          <div class="cmd-desc">Marks prescription as dispensed — permanently locked on WireFluid against re-use</div>
-        </div>
-        <div class="cmd-row">
-          <div class="cmd-tag">refill [CODE]</div>
-          <div class="cmd-desc">Checks remaining refill count and issues refill if authorised by doctor</div>
-        </div>
-        <div class="cmd-row">
-          <div class="cmd-tag">my record</div>
-          <div class="cmd-desc">Returns a secure link to the patient's full digital health dashboard</div>
-        </div>
-        <div class="cmd-row">
-          <div class="cmd-tag">emergency</div>
-          <div class="cmd-desc">Provides instant access to blood type, allergies, and emergency contacts</div>
-        </div>
-        <div class="cmd-row">
-          <div class="cmd-tag">help</div>
-          <div class="cmd-desc">Lists all available commands in English and Urdu</div>
-        </div>
-        <div class="s7-note">
-          <span>&#128241;</span>
-          <span>Works on any basic Android &bull; No app install &bull; Bi-lingual (English + Urdu)</span>
-        </div>
-      </div>
+      <div class="wf-mark">WireFluid Network</div>
+      <div class="slide-num">07 / 12</div>
     </div>
 
-    <!-- ── 8. SAFETY TOOLS ── -->
+    <!-- ══════ 8. JUDGING CRITERIA ══════ -->
     <div class="slide s8">
-      <div class="lbl">Built-In Safety Tools</div>
-      <h2 class="head">The tools that <span>prevent harm</span> before it happens</h2>
-      <div class="s8-grid">
-        <div class="s8-card" style="background:#f5f3ff;border:1px solid #ddd6fe">
-          <div class="s8-icon">&#9881;</div>
-          <div class="s8-title" style="color:#7c3aed">Drug Interaction Checker</div>
-          <div class="s8-desc">Check two medicines for dangerous interactions. Severity alerts — High, Medium, or Safe — shown immediately with clinical explanation.</div>
-          <div class="s8-pill" style="background:#ede9fe;color:#7c3aed">e.g. Warfarin + Aspirin → HIGH RISK</div>
-        </div>
-        <div class="s8-card" style="background:#ecfdf5;border:1px solid #6ee7b7">
-          <div class="s8-icon">&#128176;</div>
-          <div class="s8-title" style="color:#0f5b34">Medicine Price Checker</div>
-          <div class="s8-desc">Search DRAP-regulated Maximum Retail Prices for any brand-name medicine. Instantly compare with generic alternatives and see potential savings.</div>
-          <div class="s8-pill" style="background:#d1fae5;color:#0f5b34">MRP enforced by DRAP</div>
-        </div>
-        <div class="s8-card" style="background:#fef2f2;border:1px solid #fca5a5">
-          <div class="s8-icon">&#128680;</div>
-          <div class="s8-title" style="color:#dc2626">Emergency QR Access</div>
-          <div class="s8-desc">Scan a patient's QR code without login — blood type, allergies, and emergency contacts visible immediately. Built for emergency rooms and accident sites.</div>
-          <div class="s8-pill" style="background:#fee2e2;color:#dc2626">No login required</div>
+      <div class="slide-inner">
+        <div class="slide-badge">&#9670; Judging Alignment</div>
+        <h2 class="slide-title">Built specifically for <span class="g">WireFluid's judging criteria</span></h2>
+        <div class="g4col">
+          <div class="s8-card">
+            <div class="s8-cat">Smart Contracts</div>
+            <div class="s8-row"><span class="s8-check">&#10003;</span>10 contracts deployed</div>
+            <div class="s8-row"><span class="s8-check">&#10003;</span>OpenZeppelin throughout</div>
+            <div class="s8-row"><span class="s8-check">&#10003;</span>ReentrancyGuard on all</div>
+            <div class="s8-row"><span class="s8-check">&#10003;</span>Gas-optimized structs</div>
+            <div class="s8-row"><span class="s8-check">&#10003;</span>No transfer bugs</div>
+          </div>
+          <div class="s8-card">
+            <div class="s8-cat">Web3 Usability</div>
+            <div class="s8-row"><span class="s8-check">&#10003;</span>MetaMask + WireFluid</div>
+            <div class="s8-row"><span class="s8-check">&#10003;</span>Role-based UI per user</div>
+            <div class="s8-row"><span class="s8-check">&#10003;</span>AES-256 client encryption</div>
+            <div class="s8-row"><span class="s8-check">&#10003;</span>Zero blockchain jargon</div>
+            <div class="s8-row"><span class="s8-check">&#10003;</span>Urdu language support</div>
+          </div>
+          <div class="s8-card">
+            <div class="s8-cat">RPC Usage</div>
+            <div class="s8-row"><span class="s8-check">&#10003;</span>All calls &rarr; WireFluid RPC</div>
+            <div class="s8-row"><span class="s8-check">&#10003;</span>Multicall for reads</div>
+            <div class="s8-row"><span class="s8-check">&#10003;</span>Event listeners active</div>
+            <div class="s8-row"><span class="s8-check">&#10003;</span>WhatsApp bot reads chain</div>
+            <div class="s8-row"><span class="s8-check">&#10003;</span>Zero dropped TXs</div>
+          </div>
+          <div class="s8-card">
+            <div class="s8-cat">General Impact</div>
+            <div class="s8-row"><span class="s8-check">&#10003;</span>230M Pakistanis</div>
+            <div class="s8-row"><span class="s8-check">&#10003;</span>Prescription fraud solved</div>
+            <div class="s8-row"><span class="s8-check">&#10003;</span>Emergency lives saved</div>
+            <div class="s8-row"><span class="s8-check">&#10003;</span>DRAP-compliant</div>
+            <div class="s8-row"><span class="s8-check">&#10003;</span>Government-ready</div>
+          </div>
         </div>
       </div>
+      <div class="wf-mark">WireFluid Network</div>
+      <div class="slide-num">08 / 12</div>
     </div>
 
-    <!-- ── 9. ADMIN / DRAP PORTAL ── -->
+    <!-- ══════ 9. 5 ROLES ══════ -->
     <div class="slide s9">
-      <div class="lbl">Admin &amp; DRAP Portal</div>
-      <h2 class="head">Real-time visibility for <span>Pakistan's regulators</span></h2>
-      <div class="s9-grid">
-        <div class="s9-card">
-          <div class="s9-icon">&#128202;</div>
-          <div class="s9-title">System Analytics</div>
-          <div class="s9-desc">Live dashboard showing total prescriptions, fill rates, active pharmacies, and daily volumes across all regions.</div>
-        </div>
-        <div class="s9-card">
-          <div class="s9-icon">&#128196;</div>
-          <div class="s9-title">DRAP Schedule Reporting</div>
-          <div class="s9-desc">Visual breakdown of all prescriptions by category — Schedule G antibiotics, Schedule H, OTC, and Controlled Substances.</div>
-        </div>
-        <div class="s9-card">
-          <div class="s9-icon">&#128190;</div>
-          <div class="s9-title">Monthly Compliance Export</div>
-          <div class="s9-desc">One-click export of DRAP-compliant reports covering dispensing data, antibiotic volumes, and controlled substance usage.</div>
-        </div>
-        <div class="s9-card">
-          <div class="s9-icon">&#127981;</div>
-          <div class="s9-title">Pharmacy Registry &amp; Audit</div>
-          <div class="s9-desc">Full registry of every pharmacy — tier status, verification count, and history. Flag non-compliant shops for DRAP inspection.</div>
+      <div class="slide-inner">
+        <div class="slide-badge">&#9632; Ecosystem</div>
+        <h2 class="slide-title">One platform. <span class="g">Five user types.</span> All on WireFluid.</h2>
+        <div class="s9-roles-grid">
+          <div class="s9-role">
+            <div class="s9-role-name">&#128100; Patient</div>
+            <div class="s9-role-desc">Creates encrypted health record, controls doctor access, gets prescription codes, tracks medications</div>
+          </div>
+          <div class="s9-role">
+            <div class="s9-role-name">&#129658; Doctor</div>
+            <div class="s9-role-desc">PMDC-verified profile, writes blockchain prescriptions, manages patients, views fill history</div>
+          </div>
+          <div class="s9-role">
+            <div class="s9-role-name">&#127968; Hospital</div>
+            <div class="s9-role-desc">Registers institution on-chain, approves and manages employed doctors, gets compliance reports</div>
+          </div>
+          <div class="s9-role">
+            <div class="s9-role-name">&#128138; Pharmacist</div>
+            <div class="s9-role-desc">Verifies 6-digit codes or WhatsApp, fills prescriptions on-chain, earns tier rewards</div>
+          </div>
+          <div class="s9-role">
+            <div class="s9-role-name">&#128680; Emergency</div>
+            <div class="s9-role-desc">Scans patient QR — blood type, allergies, emergency contacts — with zero login required</div>
+          </div>
         </div>
       </div>
+      <div class="wf-mark">WireFluid Network</div>
+      <div class="slide-num">09 / 12</div>
     </div>
 
-    <!-- ── 10. MARKET ── -->
+    <!-- ══════ 10. ARCHITECTURE ══════ -->
     <div class="slide s10">
-      <div class="s10-l">
-        <div class="lbl">Market Opportunity</div>
-        <h2 class="head">The largest unserved<br><span>pharma market in Asia</span></h2>
-        <div class="s10-rows">
-          <div class="s10-row"><div class="s10-rtxt"><div class="s10-rlbl">Total Addressable Market</div><div class="s10-rsub">Pakistan pharmaceutical market (2025)</div></div><div class="s10-rval green">PKR 450B</div></div>
-          <div class="s10-row"><div class="s10-rtxt"><div class="s10-rlbl">Pharmacy Network</div><div class="s10-rsub">Medicine shops — most undigitised</div></div><div class="s10-rval blue">100,000+</div></div>
-          <div class="s10-row"><div class="s10-rtxt"><div class="s10-rlbl">Patient Population</div><div class="s10-rsub">Potential users at full scale</div></div><div class="s10-rval purple">230M</div></div>
-          <div class="s10-row"><div class="s10-rtxt"><div class="s10-rlbl">DRAP Regulatory Push</div><div class="s10-rsub">Schedule G/H enforcement mandate 2026</div></div><div class="s10-rval amber">Ready</div></div>
+      <div class="slide-inner">
+        <div class="slide-badge">&#9881; Technical Architecture</div>
+        <h2 class="slide-title">Architecture: <span class="g">why this required WireFluid</span></h2>
+        <div class="g2col" style="align-items: start; gap: 4vw">
+          <div class="s10-flow">
+            <div class="s10-row">
+              <div class="s10-actor">Patient</div>
+              <div class="s10-arrow">&rarr;</div>
+              <div class="s10-step">AES-256-GCM encrypt in browser &rarr; upload to IPFS (CID only stored on chain)</div>
+            </div>
+            <div class="s10-row">
+              <div class="s10-actor" style="color:#fbbf24;border-color:rgba(251,191,36,.3)">Doctor</div>
+              <div class="s10-arrow">&rarr;</div>
+              <div class="s10-step">mintPrescription() &rarr; 6-digit code generated &rarr; NFT on WireFluid</div>
+            </div>
+            <div class="s10-row">
+              <div class="s10-actor" style="color:#60a5fa;border-color:rgba(96,165,250,.3)">Pharmacist</div>
+              <div class="s10-arrow">&rarr;</div>
+              <div class="s10-step">verifyByCode() &rarr; WireFluid RPC &rarr; result in 2 seconds</div>
+            </div>
+            <div class="s10-row">
+              <div class="s10-actor" style="color:#f87171;border-color:rgba(248,113,113,.3)">WhatsApp</div>
+              <div class="s10-arrow">&rarr;</div>
+              <div class="s10-step">Bot reads chain &rarr; replies in natural language, Urdu or English</div>
+            </div>
+            <div class="s10-row">
+              <div class="s10-actor" style="color:#fb923c;border-color:rgba(251,146,60,.3)">ER Doctor</div>
+              <div class="s10-arrow">&rarr;</div>
+              <div class="s10-step">Emergency QR scan &rarr; read-only public data — no wallet, no login</div>
+            </div>
+          </div>
+          <div>
+            <div style="font-size:clamp(10px,1vw,14px);font-weight:700;color:#34d399;text-transform:uppercase;letter-spacing:.08em;margin-bottom:1.2vh">10 Smart Contracts on WireFluid</div>
+            <div class="s10-contracts">
+              <div class="s10-contract">HealthRecord.sol</div>
+              <div class="s10-contract">DoctorRegistry.sol</div>
+              <div class="s10-contract">PrescriptionNFT.sol</div>
+              <div class="s10-contract">EmergencyAccess.sol</div>
+              <div class="s10-contract">HospitalRegistry.sol</div>
+              <div class="s10-contract">PharmacyRegistry.sol</div>
+              <div class="s10-contract">InsuranceClaim.sol</div>
+              <div class="s10-contract">AppointmentSystem.sol</div>
+              <div class="s10-contract">VitalSigns.sol</div>
+              <div class="s10-contract">DoctorAvailability.sol</div>
+            </div>
+            <div style="margin-top:1.5vh;font-size:clamp(9px,.9vw,12px);color:#163324;font-family:'JetBrains Mono',monospace;text-align:center">All verifiable at explorer.wirefluid.com</div>
+          </div>
         </div>
       </div>
-      <div class="s10-r">
-        <div class="s10-rev">
-          <div class="s10-rtitle">Revenue Model</div>
-          <div class="s10-rrow"><div class="s10-rmod">Pharmacy SaaS</div><div class="s10-rdsc">PKR 999/month per verified pharmacy</div></div>
-          <div class="s10-rrow"><div class="s10-rmod">Doctor Subscriptions</div><div class="s10-rdsc">PMDC-verified premium tier — PKR 2,499/mo</div></div>
-          <div class="s10-rrow"><div class="s10-rmod">Hospital API</div><div class="s10-rdsc">Per-call pricing for EMR integration</div></div>
-          <div class="s10-rrow"><div class="s10-rmod">DRAP Compliance Reports</div><div class="s10-rdsc">Automated regulatory reporting service</div></div>
-        </div>
-      </div>
+      <div class="wf-mark">WireFluid Network</div>
+      <div class="slide-num">10 / 12</div>
     </div>
 
-    <!-- ── 11. ASK ── -->
+    <!-- ══════ 11. COMPETITIVE ADVANTAGE ══════ -->
     <div class="slide s11">
-      <div class="orb1"></div><div class="orb2"></div>
-      <div class="lbl">What We're Asking For</div>
-      <h2 class="head" style="margin-bottom:1.5vh">Help us fix Pakistan's<br><span>health infrastructure</span></h2>
-      <p class="s11-p">We have a fully working platform — prescriptions, patient records, pharmacy verification, WhatsApp bot, DRAP reporting, drug safety tools, and doctor directory. We're ready to scale.</p>
-      <div class="s11-goals">
-        <div class="s11-goal">
-          <div class="s11-gn">1,000</div>
-          <div class="s11-gl">pharmacies onboarded</div>
-          <div class="s11-gd">Karachi pilot — 90 days</div>
+      <div class="slide-inner">
+        <div class="slide-badge">&#9650; Why We Win</div>
+        <h2 class="slide-title">Why no other team <span class="g">built this</span></h2>
+        <div class="g3col">
+          <div class="s11-card">
+            <div class="s11-cat">Technical Depth</div>
+            <div class="s11-row"><span class="s11-dot">&#10003;</span>10 smart contracts deployed</div>
+            <div class="s11-row"><span class="s11-dot">&#10003;</span>OpenZeppelin throughout</div>
+            <div class="s11-row"><span class="s11-dot">&#10003;</span>AES-256 client encryption</div>
+            <div class="s11-row"><span class="s11-dot">&#10003;</span>IPFS + on-chain CID storage</div>
+            <div class="s11-row"><span class="s11-dot">&#10003;</span>Gas-optimized struct packing</div>
+          </div>
+          <div class="s11-card">
+            <div class="s11-cat">Pakistan-Specific</div>
+            <div class="s11-row"><span class="s11-dot">&#10003;</span>Full Urdu language support</div>
+            <div class="s11-row"><span class="s11-dot">&#10003;</span>DRAP medicine categories</div>
+            <div class="s11-row"><span class="s11-dot">&#10003;</span>WhatsApp-first pharmacy</div>
+            <div class="s11-row"><span class="s11-dot">&#10003;</span>Pakistani drug name database</div>
+            <div class="s11-row"><span class="s11-dot">&#10003;</span>PKR currency throughout</div>
+          </div>
+          <div class="s11-card">
+            <div class="s11-cat">Demo Quality</div>
+            <div class="s11-row"><span class="s11-dot">&#10003;</span>WhatsApp live during demo</div>
+            <div class="s11-row"><span class="s11-dot">&#10003;</span>Emergency QR scan live</div>
+            <div class="s11-row"><span class="s11-dot">&#10003;</span>All seeded data ready</div>
+            <div class="s11-row"><span class="s11-dot">&#10003;</span>PK-7X4M2K verifiable</div>
+            <div class="s11-row"><span class="s11-dot">&#10003;</span>Video backup prepared</div>
+          </div>
         </div>
-        <div class="s11-goal">
-          <div class="s11-gn">100+</div>
-          <div class="s11-gl">PMDC doctors</div>
-          <div class="s11-gd">On platform at launch</div>
-        </div>
-        <div class="s11-goal">
-          <div class="s11-gn">DRAP</div>
-          <div class="s11-gl">formal integration</div>
-          <div class="s11-gd">Real-time compliance link</div>
-        </div>
-        <div class="s11-goal">
-          <div class="s11-gn">5</div>
-          <div class="s11-gl">hospital EMR pilots</div>
-          <div class="s11-gd">API integration</div>
+        <div class="s11-bottom">
+          "Other teams will build one contract. We built a complete healthcare infrastructure."
         </div>
       </div>
-      <div class="s11-qt">"Pakistan doesn't need better paper prescriptions. It needs a system that makes fraud impossible."</div>
+      <div class="wf-mark">WireFluid Network</div>
+      <div class="slide-num">11 / 12</div>
+    </div>
+
+    <!-- ══════ 12. CLOSE ══════ -->
+    <div class="slide s12">
+      <div class="s12-inner">
+        <div class="slide-badge">&#9733; PrivyHealth Pakistan &middot; The Vision</div>
+        <h2 class="slide-title" style="text-align:center;margin-bottom:2.5vh">
+          Pakistan's first blockchain <span class="g">healthcare record system</span>
+        </h2>
+        <div class="s12-2col">
+          <div class="s12-col">
+            <div class="s12-col-title" style="color:#34d399">&#10003; TODAY — Hackathon</div>
+            <div class="s12-row"><span class="s12-done">&#10003;</span>10 contracts on WireFluid — deployed</div>
+            <div class="s12-row"><span class="s12-done">&#10003;</span>Complete patient journey — working</div>
+            <div class="s12-row"><span class="s12-done">&#10003;</span>WhatsApp pharmacy system — live</div>
+            <div class="s12-row"><span class="s12-done">&#10003;</span>Emergency QR card — scannable</div>
+            <div class="s12-row"><span class="s12-done">&#10003;</span>AI drug interaction checker — active</div>
+            <div class="s12-row"><span class="s12-done">&#10003;</span>DRAP compliance reporting — ready</div>
+          </div>
+          <div class="s12-col">
+            <div class="s12-col-title" style="color:#fbbf24">&#8594; TOMORROW — Post-Hackathon</div>
+            <div class="s12-row"><span class="s12-next">&#8594;</span>DRAP digital prescription mandate</div>
+            <div class="s12-row"><span class="s12-next">&#8594;</span>120,000 pharmacies onboarded</div>
+            <div class="s12-row"><span class="s12-next">&#8594;</span>Partnership with Sehat Sahulat</div>
+            <div class="s12-row"><span class="s12-next">&#8594;</span>Government pilot program</div>
+            <div class="s12-row"><span class="s12-next">&#8594;</span>230 million Pakistanis served</div>
+            <div class="s12-row"><span class="s12-next">&#8594;</span>Imagine what we build next.</div>
+          </div>
+        </div>
+        <div class="s12-bottom">
+          <div class="s12-vision">
+            Built during Entangled Hackathon 2026.<br>Deployed on <span class="g">WireFluid.</span>
+          </div>
+          <div class="s12-addr">
+            HealthRecord.sol &middot; PrescriptionNFT.sol &middot; EmergencyAccess.sol &middot; DoctorRegistry.sol &middot; HospitalRegistry.sol &middot; PharmacyRegistry.sol &middot; All on WireFluid Network
+          </div>
+        </div>
+      </div>
+      <div class="wf-mark">WireFluid Network</div>
+      <div class="slide-num">12 / 12</div>
     </div>
 
   </div><!-- /wrap -->
 </div><!-- /app -->
 
 <script>
-  var LABELS = ['Title','Problem','Platform','Patients','Doctors','Pharmacies','WhatsApp Bot','Safety Tools','DRAP Admin','Market','Ask'];
+  var LABELS = ['Title','Problem','Why WireFluid','Solution','WireFluid Powers','Live Demo','WhatsApp','Judging','5 Roles','Architecture','We Win','Vision'];
   var total = LABELS.length, cur = 0;
   var slides  = document.querySelectorAll('.slide');
   var counter = document.getElementById('counter');
@@ -599,7 +690,7 @@
     cur = Math.max(0, Math.min(total - 1, n));
     slides[cur].classList.add('active');
     tabsEl.children[cur].classList.add('active');
-    counter.textContent = (cur + 1) + ' / ' + total;
+    counter.textContent = (cur + 1) + '/' + total;
     prevBtn.disabled = (cur === 0);
     nextBtn.disabled = (cur === total - 1);
   }
