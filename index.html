@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PrivyHealth Pakistan — Pitch Deck</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { width: 100%; height: 100%; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #111; color: #fff; overflow: hidden; }
+
+    #app { width: 100vw; height: 100vh; display: flex; flex-direction: column; }
+
+    /* ── Top bar ── */
+    #topbar {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 10px 20px; background: #1a1a1a; border-bottom: 1px solid #2a2a2a;
+      flex-shrink: 0; gap: 12px;
+    }
+    #topbar .brand { font-weight: 800; font-size: 15px; color: #10b981; white-space: nowrap; }
+    #topbar .hint { font-size: 11px; color: #555; white-space: nowrap; }
+    #tabs { display: flex; gap: 4px; flex-wrap: wrap; }
+    #tabs button {
+      padding: 5px 12px; border-radius: 6px; border: 1px solid #333;
+      background: transparent; color: #888; font-size: 12px; cursor: pointer;
+      transition: all 0.15s;
+    }
+    #tabs button:hover { background: #222; color: #ccc; }
+    #tabs button.active { background: #10b981; border-color: #10b981; color: #fff; font-weight: 700; }
+    #nav { display: flex; gap: 6px; align-items: center; }
+    #nav button {
+      width: 32px; height: 32px; border-radius: 8px; border: 1px solid #333;
+      background: #222; color: #ccc; font-size: 16px; cursor: pointer;
+      display: flex; align-items: center; justify-content: center; transition: all 0.15s;
+    }
+    #nav button:hover:not(:disabled) { background: #333; }
+    #nav button:disabled { opacity: 0.3; cursor: default; }
+    #counter { font-size: 12px; color: #555; min-width: 40px; text-align: center; }
+    #fullscreenBtn {
+      padding: 6px 14px; border-radius: 8px; border: 1px solid #10b981;
+      background: transparent; color: #10b981; font-size: 12px; font-weight: 700;
+      cursor: pointer; transition: all 0.15s; white-space: nowrap;
+    }
+    #fullscreenBtn:hover { background: rgba(16,185,129,0.12); }
+
+    /* ── Slide area ── */
+    #slide-wrap {
+      flex: 1; position: relative; overflow: hidden;
+    }
+    .slide {
+      position: absolute; inset: 0;
+      opacity: 0; pointer-events: none;
+      transition: opacity 0.25s ease;
+    }
+    .slide.active {
+      opacity: 1; pointer-events: auto;
+    }
+
+    /* ── SLIDE 1: Title ── */
+    .s1 {
+      background: linear-gradient(135deg, #0c4a3f 0%, #064e3b 40%, #022c22 100%);
+      display: flex; flex-direction: column; justify-content: center;
+      align-items: flex-start; padding: 8vh 10vw; position: relative; overflow: hidden;
+    }
+    .s1-orb1 { position: absolute; top: 10%; right: 8%; width: 38vw; height: 38vw; border-radius: 50%; background: rgba(22,163,74,0.08); pointer-events: none; }
+    .s1-orb2 { position: absolute; bottom: -5%; right: 20%; width: 22vw; height: 22vw; border-radius: 50%; background: rgba(52,211,153,0.07); pointer-events: none; }
+    .s1-logo { display: flex; align-items: center; gap: 10px; margin-bottom: 3vh; }
+    .s1-dot { width: 2.5vw; height: 2.5vw; min-width: 24px; min-height: 24px; background: #10b981; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+    .s1-dot svg { width: 55%; height: 55%; }
+    .s1-brand { font-size: clamp(13px,1.3vw,20px); font-weight: 700; color: #10b981; letter-spacing: 0.08em; text-transform: uppercase; }
+    .s1-h1 { font-size: clamp(32px,5.5vw,80px); font-weight: 900; color: #fff; line-height: 1.08; margin-bottom: 2.5vh; letter-spacing: -0.02em; max-width: 70%; }
+    .s1-h1 span { color: #10b981; }
+    .s1-sub { font-size: clamp(12px,1.6vw,22px); color: rgba(255,255,255,0.72); max-width: 55%; line-height: 1.6; margin-bottom: 4vh; }
+    .s1-badge { background: rgba(16,185,129,0.15); border: 1px solid rgba(16,185,129,0.4); border-radius: 100px; padding: 8px 20px; display: inline-block; }
+    .s1-badge span { font-size: clamp(11px,1.2vw,16px); color: #10b981; font-weight: 700; }
+    .s1-stats { position: absolute; right: 8vw; top: 50%; transform: translateY(-50%); display: flex; flex-direction: column; gap: 2vh; }
+    .s1-stat { background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); border-radius: 1vw; padding: 1.5vh 2vw; text-align: center; min-width: 12vw; }
+    .s1-stat-n { font-size: clamp(14px,1.8vw,26px); font-weight: 800; color: #10b981; }
+    .s1-stat-l { font-size: clamp(9px,0.9vw,13px); color: rgba(255,255,255,0.5); margin-top: 4px; }
+
+    /* ── SLIDE 2: Problem ── */
+    .s2 { background: #fafaf9; display: flex; flex-direction: column; justify-content: center; padding: 7vh 8vw; position: relative; color: #111; }
+    .s2::before { content: ''; position: absolute; top: 0; left: 0; width: 0.5vw; height: 100%; background: #dc2626; }
+    .s2-label { font-size: clamp(10px,1vw,14px); font-weight: 700; color: #dc2626; text-transform: uppercase; letter-spacing: 0.12em; margin-bottom: 2vh; }
+    .s2-h2 { font-size: clamp(24px,3.8vw,58px); font-weight: 900; color: #111; line-height: 1.1; margin-bottom: 4vh; letter-spacing: -0.02em; }
+    .s2-h2 span { color: #dc2626; }
+    .s2-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 2vw; }
+    .s2-card { border-radius: 1.2vw; padding: 3vh 2.5vw; }
+    .s2-stat { font-size: clamp(24px,3.8vw,60px); font-weight: 900; line-height: 1; margin-bottom: 1.5vh; }
+    .s2-title { font-size: clamp(12px,1.3vw,18px); font-weight: 700; color: #111; margin-bottom: 1vh; line-height: 1.3; }
+    .s2-detail { font-size: clamp(11px,1.1vw,15px); color: #555; line-height: 1.5; }
+
+    /* ── SLIDE 3: Solution ── */
+    .s3 { background: linear-gradient(160deg,#064e3b 0%,#0c4a3f 100%); display: flex; flex-direction: column; justify-content: center; padding: 7vh 8vw; position: relative; overflow: hidden; }
+    .s3-orb { position: absolute; bottom: -8vh; right: -5vw; width: 40vw; height: 40vw; border-radius: 50%; background: rgba(16,185,129,0.06); pointer-events: none; }
+    .s3-label { font-size: clamp(10px,1vw,14px); font-weight: 700; color: #10b981; text-transform: uppercase; letter-spacing: 0.12em; margin-bottom: 2vh; }
+    .s3-h2 { font-size: clamp(22px,3.5vw,52px); font-weight: 900; color: #fff; line-height: 1.1; margin-bottom: 4vh; letter-spacing: -0.02em; max-width: 65%; }
+    .s3-h2 span { color: #10b981; }
+    .s3-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2.5vw; max-width: 85%; }
+    .s3-card { background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.12); border-radius: 1vw; padding: 2.5vh 2vw; }
+    .s3-icon { font-size: clamp(16px,1.8vw,28px); font-weight: 900; color: #10b981; margin-bottom: 1vh; font-family: monospace; }
+    .s3-title { font-size: clamp(12px,1.3vw,18px); font-weight: 700; color: #fff; margin-bottom: 0.8vh; }
+    .s3-desc { font-size: clamp(11px,1.1vw,15px); color: rgba(255,255,255,0.65); line-height: 1.5; }
+
+    /* ── SLIDE 4: How it works ── */
+    .s4 { background: #f8f9fa; display: flex; flex-direction: column; justify-content: center; padding: 6vh 8vw; color: #111; }
+    .s4-label { font-size: clamp(10px,1vw,14px); font-weight: 700; color: #0f5b34; text-transform: uppercase; letter-spacing: 0.12em; margin-bottom: 1.5vh; }
+    .s4-h2 { font-size: clamp(20px,3vw,46px); font-weight: 900; color: #111; line-height: 1.15; margin-bottom: 4vh; letter-spacing: -0.02em; }
+    .s4-h2 span { color: #0f5b34; }
+    .s4-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 1.5vw; position: relative; }
+    .s4-line { position: absolute; top: 3.5vh; left: 5%; right: 5%; height: 2px; background: linear-gradient(90deg,#2563eb,#7c3aed,#0f5b34,#d97706); z-index: 0; }
+    .s4-card { border-radius: 1.2vw; padding: 2.5vh 1.8vw; position: relative; z-index: 1; }
+    .s4-num { width: 4vh; height: 4vh; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-bottom: 2vh; }
+    .s4-num span { font-size: clamp(9px,1vw,14px); font-weight: 800; color: #fff; }
+    .s4-actor { font-size: clamp(9px,1vw,14px); font-weight: 800; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 0.8vh; }
+    .s4-action { font-size: clamp(11px,1.25vw,17px); font-weight: 700; color: #111; margin-bottom: 1vh; line-height: 1.3; }
+    .s4-detail { font-size: clamp(10px,1.05vw,14px); color: #555; line-height: 1.5; }
+
+    /* ── SLIDE 5: Tiers ── */
+    .s5 { background: #fff; display: flex; padding: 6vh 8vw; gap: 6vw; color: #111; }
+    .s5-left { flex: 1; display: flex; flex-direction: column; justify-content: center; }
+    .s5-label { font-size: clamp(10px,1vw,14px); font-weight: 700; color: #d97706; text-transform: uppercase; letter-spacing: 0.12em; margin-bottom: 1.5vh; }
+    .s5-h2 { font-size: clamp(22px,3.2vw,48px); font-weight: 900; color: #111; line-height: 1.1; margin-bottom: 2vh; letter-spacing: -0.02em; }
+    .s5-h2 span { color: #0f5b34; }
+    .s5-p { font-size: clamp(12px,1.3vw,18px); color: #555; line-height: 1.6; max-width: 90%; }
+    .s5-right { flex: 1; display: flex; flex-direction: column; justify-content: center; gap: 2vh; }
+    .s5-tier { border-radius: 1vw; padding: 2vh 2vw; display: flex; gap: 1.5vw; align-items: flex-start; }
+    .s5-badge { width: 3.5vh; height: 3.5vh; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 2px; }
+    .s5-badge span { font-size: clamp(10px,1.1vw,15px); color: #fff; font-weight: 900; }
+    .s5-tier-name { font-size: clamp(13px,1.4vw,20px); font-weight: 800; }
+    .s5-tier-range { font-size: clamp(10px,1vw,14px); color: #777; font-weight: 600; margin-left: 12px; }
+    .s5-perks { display: flex; gap: 1.5vw; flex-wrap: wrap; margin-top: 5px; }
+    .s5-perks span { font-size: clamp(10px,1vw,14px); color: #444; }
+
+    /* ── SLIDE 6: Traction ── */
+    .s6 { background: linear-gradient(160deg,#064e3b 0%,#065f46 100%); display: flex; flex-direction: column; justify-content: center; padding: 7vh 8vw; position: relative; overflow: hidden; }
+    .s6-orb { position: absolute; top: -5vh; right: -5vw; width: 35vw; height: 35vw; border-radius: 50%; background: rgba(16,185,129,0.08); pointer-events: none; }
+    .s6-label { font-size: clamp(10px,1vw,14px); font-weight: 700; color: #10b981; text-transform: uppercase; letter-spacing: 0.12em; margin-bottom: 1.5vh; }
+    .s6-h2 { font-size: clamp(22px,3vw,46px); font-weight: 900; color: #fff; line-height: 1.15; margin-bottom: 4vh; letter-spacing: -0.02em; max-width: 70%; }
+    .s6-h2 span { color: #10b981; }
+    .s6-top { display: grid; grid-template-columns: repeat(3,1fr); gap: 2vw; margin-bottom: 3vh; }
+    .s6-stat { background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.14); border-radius: 1vw; padding: 2.5vh 2vw; text-align: center; }
+    .s6-val { font-size: clamp(24px,3.2vw,50px); font-weight: 900; color: #10b981; line-height: 1; margin-bottom: 1vh; }
+    .s6-stat-label { font-size: clamp(12px,1.2vw,17px); font-weight: 700; color: #fff; margin-bottom: 0.5vh; }
+    .s6-sub { font-size: clamp(10px,1vw,14px); color: rgba(255,255,255,0.55); }
+    .s6-steps { display: grid; grid-template-columns: repeat(4,1fr); gap: 1.5vw; }
+    .s6-step { background: rgba(16,185,129,0.12); border: 1px solid rgba(16,185,129,0.25); border-radius: 0.8vw; padding: 1.5vh 1.5vw; display: flex; align-items: flex-start; gap: 0.8vw; }
+    .s6-n { font-size: clamp(11px,1.2vw,17px); font-weight: 800; color: #10b981; flex-shrink: 0; }
+    .s6-step-label { font-size: clamp(10px,1.1vw,15px); color: rgba(255,255,255,0.85); line-height: 1.4; }
+
+    /* ── SLIDE 7: Market ── */
+    .s7 { background: #f8f9fa; display: flex; padding: 6vh 8vw; gap: 5vw; color: #111; }
+    .s7-left { flex: 1.1; display: flex; flex-direction: column; justify-content: center; }
+    .s7-label { font-size: clamp(10px,1vw,14px); font-weight: 700; color: #0f5b34; text-transform: uppercase; letter-spacing: 0.12em; margin-bottom: 1.5vh; }
+    .s7-h2 { font-size: clamp(22px,3.2vw,48px); font-weight: 900; color: #111; line-height: 1.1; margin-bottom: 3vh; letter-spacing: -0.02em; }
+    .s7-h2 span { color: #0f5b34; }
+    .s7-rows { display: flex; flex-direction: column; gap: 1.5vh; }
+    .s7-row { display: flex; align-items: center; gap: 2vw; background: #fff; border: 1px solid #e5e7eb; border-radius: 0.8vw; padding: 1.5vh 2vw; }
+    .s7-row-text { flex: 1; }
+    .s7-row-lbl { font-size: clamp(10px,1.05vw,14px); color: #777; margin-bottom: 3px; }
+    .s7-row-sub { font-size: clamp(10px,1.1vw,15px); color: #555; line-height: 1.4; }
+    .s7-val { font-size: clamp(18px,2.2vw,34px); font-weight: 900; flex-shrink: 0; text-align: right; }
+    .s7-right { flex: 0.9; display: flex; flex-direction: column; justify-content: center; gap: 2vh; }
+    .s7-rev { background: #fff; border: 1.5px solid #e5e7eb; border-radius: 1.2vw; padding: 3vh 2.5vw; }
+    .s7-rev-title { font-size: clamp(10px,1vw,14px); font-weight: 700; color: #777; margin-bottom: 2vh; text-transform: uppercase; letter-spacing: 0.08em; }
+    .s7-rev-row { display: flex; justify-content: space-between; padding: 1.2vh 0; border-bottom: 1px solid #f3f4f6; }
+    .s7-rev-row:last-child { border-bottom: none; }
+    .s7-rev-model { font-size: clamp(12px,1.2vw,17px); font-weight: 700; color: #111; }
+    .s7-rev-desc { font-size: clamp(10px,1.05vw,14px); color: #555; text-align: right; max-width: 55%; }
+
+    /* ── SLIDE 8: Ask ── */
+    .s8 { background: linear-gradient(140deg,#0c4a3f 0%,#064e3b 50%,#022c22 100%); display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 7vh 10vw; text-align: center; position: relative; overflow: hidden; }
+    .s8-orb1 { position: absolute; top: -10%; left: -5%; width: 30vw; height: 30vw; border-radius: 50%; background: rgba(16,185,129,0.08); pointer-events: none; }
+    .s8-orb2 { position: absolute; bottom: -10%; right: -5%; width: 35vw; height: 35vw; border-radius: 50%; background: rgba(16,185,129,0.06); pointer-events: none; }
+    .s8-label { font-size: clamp(10px,1vw,14px); font-weight: 700; color: #10b981; text-transform: uppercase; letter-spacing: 0.12em; margin-bottom: 2vh; }
+    .s8-h2 { font-size: clamp(28px,4.5vw,70px); font-weight: 900; color: #fff; line-height: 1.1; margin-bottom: 2vh; letter-spacing: -0.02em; }
+    .s8-h2 span { color: #10b981; }
+    .s8-p { font-size: clamp(12px,1.5vw,22px); color: rgba(255,255,255,0.65); max-width: 65%; line-height: 1.6; margin-bottom: 5vh; }
+    .s8-goals { display: grid; grid-template-columns: repeat(3,1fr); gap: 2vw; width: 100%; max-width: 75%; margin-bottom: 4vh; }
+    .s8-goal { background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12); border-radius: 1vw; padding: 2.5vh 2vw; }
+    .s8-goal-n { font-size: clamp(22px,2.8vw,44px); font-weight: 900; color: #10b981; line-height: 1; margin-bottom: 1vh; }
+    .s8-goal-l { font-size: clamp(12px,1.2vw,17px); font-weight: 700; color: #fff; margin-bottom: 0.5vh; }
+    .s8-goal-d { font-size: clamp(10px,1vw,14px); color: rgba(255,255,255,0.55); }
+    .s8-quote { font-size: clamp(12px,1.3vw,18px); color: rgba(255,255,255,0.5); font-style: italic; }
+  </style>
+</head>
+<body>
+<div id="app">
+  <!-- Top bar -->
+  <div id="topbar">
+    <div class="brand">PrivyHealth Pakistan</div>
+    <div id="tabs"></div>
+    <div id="nav">
+      <button id="prevBtn" onclick="go(-1)">&#8592;</button>
+      <span id="counter">1 / 8</span>
+      <button id="nextBtn" onclick="go(1)">&#8594;</button>
+    </div>
+    <button id="fullscreenBtn" onclick="toggleFS()">&#9974; Fullscreen</button>
+    <div class="hint">Arrow keys to navigate · F for fullscreen</div>
+  </div>
+
+  <!-- Slides -->
+  <div id="slide-wrap">
+
+    <!-- Slide 1: Title -->
+    <div class="slide s1 active" id="sl0">
+      <div class="s1-orb1"></div>
+      <div class="s1-orb2"></div>
+      <div class="s1-logo">
+        <div class="s1-dot">
+          <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 21 12 17.77 5.82 21 7 14.14 2 9.27l6.91-1.01L12 2z"/>
+          </svg>
+        </div>
+        <span class="s1-brand">PrivyHealth Pakistan</span>
+      </div>
+      <h1 class="s1-h1">Prescription fraud.<br><span>Eliminated.</span></h1>
+      <p class="s1-sub">Blockchain-verified prescriptions via 6-digit codes and WhatsApp — built for Pakistan's 230 million people and 100,000+ pharmacies.</p>
+      <div class="s1-badge"><span>DRAP Compliant · WireFluid Network</span></div>
+      <div class="s1-stats">
+        <div class="s1-stat"><div class="s1-stat-n">6-digit</div><div class="s1-stat-l">Prescription Code</div></div>
+        <div class="s1-stat"><div class="s1-stat-n">WhatsApp</div><div class="s1-stat-l">Pharmacy Verify</div></div>
+        <div class="s1-stat"><div class="s1-stat-n">DRAP</div><div class="s1-stat-l">Compliant</div></div>
+        <div class="s1-stat"><div class="s1-stat-n">230M+</div><div class="s1-stat-l">Pakistanis</div></div>
+      </div>
+    </div>
+
+    <!-- Slide 2: Problem -->
+    <div class="slide s2" id="sl1">
+      <div class="s2-label">The Problem</div>
+      <h2 class="s2-h2">Pakistan's prescription system<br>is <span>dangerously broken</span></h2>
+      <div class="s2-grid">
+        <div class="s2-card" style="background:#fef2f2;border:1px solid #fca5a5;">
+          <div class="s2-stat" style="color:#dc2626;">95%</div>
+          <div class="s2-title">pharmacies have no qualified pharmacist</div>
+          <div class="s2-detail">Just shopkeepers dispensing antibiotics freely with zero verification</div>
+        </div>
+        <div class="s2-card" style="background:#fffbeb;border:1px solid #fcd34d;">
+          <div class="s2-stat" style="color:#d97706;">XDR</div>
+          <div class="s2-title">typhoid crisis from antibiotic misuse</div>
+          <div class="s2-detail">Pakistan declared a global health emergency — caused by freely dispensed antibiotics</div>
+        </div>
+        <div class="s2-card" style="background:#f5f3ff;border:1px solid #c4b5fd;">
+          <div class="s2-stat" style="color:#7c3aed;">100k+</div>
+          <div class="s2-title">unlicensed medicine shops nationwide</div>
+          <div class="s2-detail">QR code solutions fail — most shopkeepers have basic Android phones, no scanner app</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Slide 3: Solution -->
+    <div class="slide s3" id="sl2">
+      <div class="s3-orb"></div>
+      <div class="s3-label">Our Solution</div>
+      <h2 class="s3-h2">Works on any phone. Even basic Android.<br><span>No app download needed.</span></h2>
+      <div class="s3-grid">
+        <div class="s3-card">
+          <div class="s3-icon">↗</div>
+          <div class="s3-title">6-Digit Human-Readable Code</div>
+          <div class="s3-desc">PK-7X4M2K — patients say this at any pharmacy. No smartphone, no QR, no app required.</div>
+        </div>
+        <div class="s3-card">
+          <div class="s3-icon">◎</div>
+          <div class="s3-title">WhatsApp-First Verification</div>
+          <div class="s3-desc">Pharmacist sends "verify PK-7X4M2K" → instant reply with full prescription details. Zero training needed.</div>
+        </div>
+        <div class="s3-card">
+          <div class="s3-icon">◈</div>
+          <div class="s3-title">DRAP-Compliant Categories</div>
+          <div class="s3-desc">Schedule G, H, OTC, and Controlled Substances — automatically flagged and gated by pharmacy tier.</div>
+        </div>
+        <div class="s3-card">
+          <div class="s3-icon">▲</div>
+          <div class="s3-title">Pharmacy Incentive Pyramid</div>
+          <div class="s3-desc">Basic → Verified → Premium. Pharmacies earn credits per verification — driven to comply.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Slide 4: How it works -->
+    <div class="slide s4" id="sl3">
+      <div class="s4-label">How It Works</div>
+      <h2 class="s4-h2">From prescription to pharmacy in <span>under 30 seconds</span></h2>
+      <div class="s4-grid">
+        <div class="s4-line"></div>
+        <div class="s4-card" style="background:#eff6ff;border:1.5px solid #bfdbfe;">
+          <div class="s4-num" style="background:#2563eb;"><span>01</span></div>
+          <div class="s4-actor" style="color:#2563eb;">Doctor</div>
+          <div class="s4-action">Writes prescription on PrivyHealth</div>
+          <div class="s4-detail">Fills medicine, dosage, category — one confirmation screen</div>
+        </div>
+        <div class="s4-card" style="background:#f5f3ff;border:1.5px solid #ddd6fe;">
+          <div class="s4-num" style="background:#7c3aed;"><span>02</span></div>
+          <div class="s4-actor" style="color:#7c3aed;">System</div>
+          <div class="s4-action">Generates 6-digit code instantly</div>
+          <div class="s4-detail">PK-7X4M2K — secured on WireFluid, timestamped with doctor signature</div>
+        </div>
+        <div class="s4-card" style="background:#f0fdf4;border:1.5px solid #86efac;">
+          <div class="s4-num" style="background:#0f5b34;"><span>03</span></div>
+          <div class="s4-actor" style="color:#0f5b34;">Patient</div>
+          <div class="s4-action">Shows code at pharmacy</div>
+          <div class="s4-detail">Says "Code hai PK-7X4M2K" or sends WhatsApp — no paper slip needed</div>
+        </div>
+        <div class="s4-card" style="background:#fffbeb;border:1.5px solid #fcd34d;">
+          <div class="s4-num" style="background:#d97706;"><span>04</span></div>
+          <div class="s4-actor" style="color:#d97706;">Pharmacist</div>
+          <div class="s4-action">Verifies in seconds</div>
+          <div class="s4-detail">Types or WhatsApps the code → full prescription details returned instantly</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Slide 5: Tiers -->
+    <div class="slide s5" id="sl4">
+      <div class="s5-left">
+        <div class="s5-label">Pharmacy Incentives</div>
+        <h2 class="s5-h2">The pyramid that makes<br><span>pharmacies want to verify</span></h2>
+        <p class="s5-p">Most systems try to force compliance. PrivyHealth makes pharmacies compete to be verified — because higher tiers mean more patients and higher-value prescriptions.</p>
+      </div>
+      <div class="s5-right">
+        <div class="s5-tier" style="background:#fffbeb;border:1.5px solid #fcd34d;">
+          <div class="s5-badge" style="background:#d97706;"><span>⭐</span></div>
+          <div>
+            <div style="display:flex;align-items:center;">
+              <span class="s5-tier-name" style="color:#d97706;">Premium</span>
+              <span class="s5-tier-range">500+ verifications</span>
+            </div>
+            <div class="s5-perks">
+              <span>• Controlled substance prescriptions</span>
+              <span>• Priority directory listing</span>
+              <span>• Patient referrals from app</span>
+            </div>
+          </div>
+        </div>
+        <div class="s5-tier" style="background:#eff6ff;border:1.5px solid #bfdbfe;">
+          <div class="s5-badge" style="background:#2563eb;"><span>✓</span></div>
+          <div>
+            <div style="display:flex;align-items:center;">
+              <span class="s5-tier-name" style="color:#2563eb;">Verified</span>
+              <span class="s5-tier-range">100+ verifications</span>
+            </div>
+            <div class="s5-perks">
+              <span>• Featured pharmacy listing</span>
+              <span>• Patient referral traffic</span>
+              <span>• Standard medicines unlocked</span>
+            </div>
+          </div>
+        </div>
+        <div class="s5-tier" style="background:#f9fafb;border:1.5px solid #e5e7eb;">
+          <div class="s5-badge" style="background:#6b7280;"><span>◦</span></div>
+          <div>
+            <div style="display:flex;align-items:center;">
+              <span class="s5-tier-name" style="color:#6b7280;">Basic</span>
+              <span class="s5-tier-range">0–99 verifications</span>
+            </div>
+            <div class="s5-perks">
+              <span>• Standard listing</span>
+              <span>• OTC and Schedule H only</span>
+              <span>• Earns verification credits</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Slide 6: Traction -->
+    <div class="slide s6" id="sl5">
+      <div class="s6-orb"></div>
+      <div class="s6-label">Live Demo &amp; Traction</div>
+      <h2 class="s6-h2">Fully working system.<br><span>Try it right now.</span></h2>
+      <div class="s6-top">
+        <div class="s6-stat">
+          <div class="s6-val">3</div>
+          <div class="s6-stat-label">Live Demo Prescriptions</div>
+          <div class="s6-sub">PK-7X4M2K · PK-9KRM4X · PK-2BX8NQ</div>
+        </div>
+        <div class="s6-stat">
+          <div class="s6-val">100%</div>
+          <div class="s6-stat-label">WhatsApp Bot Functional</div>
+          <div class="s6-sub">verify / fill / refill / emergency — live</div>
+        </div>
+        <div class="s6-stat">
+          <div class="s6-val">DRAP</div>
+          <div class="s6-stat-label">Compliant Categories</div>
+          <div class="s6-sub">Schedule G, H, OTC, Controlled</div>
+        </div>
+      </div>
+      <div class="s6-steps">
+        <div class="s6-step"><span class="s6-n">1.</span><span class="s6-step-label">Doctor writes prescription</span></div>
+        <div class="s6-step"><span class="s6-n">2.</span><span class="s6-step-label">Patient gets 6-digit code</span></div>
+        <div class="s6-step"><span class="s6-n">3.</span><span class="s6-step-label">Pharmacist verifies on WhatsApp</span></div>
+        <div class="s6-step"><span class="s6-n">4.</span><span class="s6-step-label">Dispensed — recorded on WireFluid</span></div>
+      </div>
+    </div>
+
+    <!-- Slide 7: Market -->
+    <div class="slide s7" id="sl6">
+      <div class="s7-left">
+        <div class="s7-label">Market Opportunity</div>
+        <h2 class="s7-h2">The largest unserved<br><span>pharma market in Asia</span></h2>
+        <div class="s7-rows">
+          <div class="s7-row">
+            <div class="s7-row-text">
+              <div class="s7-row-lbl">Total Addressable Market</div>
+              <div class="s7-row-sub">Pakistan's pharmaceutical market size (2025)</div>
+            </div>
+            <div class="s7-val" style="color:#0f5b34;">PKR 450B</div>
+          </div>
+          <div class="s7-row">
+            <div class="s7-row-text">
+              <div class="s7-row-lbl">Pharmacy Network</div>
+              <div class="s7-row-sub">Medicine shops — most undigitised</div>
+            </div>
+            <div class="s7-val" style="color:#2563eb;">100,000+</div>
+          </div>
+          <div class="s7-row">
+            <div class="s7-row-text">
+              <div class="s7-row-lbl">Patient Population</div>
+              <div class="s7-row-sub">Potential users at full scale</div>
+            </div>
+            <div class="s7-val" style="color:#7c3aed;">230M</div>
+          </div>
+          <div class="s7-row">
+            <div class="s7-row-text">
+              <div class="s7-row-lbl">DRAP Regulatory Alignment</div>
+              <div class="s7-row-sub">Schedule G/H enforcement mandate from 2026</div>
+            </div>
+            <div class="s7-val" style="color:#d97706;">Ready</div>
+          </div>
+        </div>
+      </div>
+      <div class="s7-right">
+        <div class="s7-rev">
+          <div class="s7-rev-title">Revenue Model</div>
+          <div class="s7-rev-row">
+            <div class="s7-rev-model">Pharmacy SaaS</div>
+            <div class="s7-rev-desc">PKR 999/month per verified pharmacy</div>
+          </div>
+          <div class="s7-rev-row">
+            <div class="s7-rev-model">Doctor Subscriptions</div>
+            <div class="s7-rev-desc">Premium PMDC-verified tier — PKR 2,499/mo</div>
+          </div>
+          <div class="s7-rev-row">
+            <div class="s7-rev-model">Hospital API</div>
+            <div class="s7-rev-desc">Per-API-call pricing for hospital EMR integration</div>
+          </div>
+          <div class="s7-rev-row">
+            <div class="s7-rev-model">DRAP Reporting</div>
+            <div class="s7-rev-desc">Automated compliance reports for regulators</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Slide 8: Ask -->
+    <div class="slide s8" id="sl7">
+      <div class="s8-orb1"></div>
+      <div class="s8-orb2"></div>
+      <div class="s8-label">What We're Asking For</div>
+      <h2 class="s8-h2">Help us fix Pakistan's<br><span>prescription crisis</span></h2>
+      <p class="s8-p">We're ready to deploy to 1,000 pharmacies in Karachi, integrate with DRAP's registry, and onboard 100 PMDC-verified doctors onto the platform.</p>
+      <div class="s8-goals">
+        <div class="s8-goal">
+          <div class="s8-goal-n">1,000</div>
+          <div class="s8-goal-l">pharmacies onboarded</div>
+          <div class="s8-goal-d">Karachi pilot in 90 days</div>
+        </div>
+        <div class="s8-goal">
+          <div class="s8-goal-n">100+</div>
+          <div class="s8-goal-l">PMDC-verified doctors</div>
+          <div class="s8-goal-d">On platform at launch</div>
+        </div>
+        <div class="s8-goal">
+          <div class="s8-goal-n">DRAP</div>
+          <div class="s8-goal-l">formal integration</div>
+          <div class="s8-goal-d">Real-time compliance reporting</div>
+        </div>
+      </div>
+      <div class="s8-quote">"Every unverified antibiotic sold without a prescription is a step toward the next epidemic."</div>
+    </div>
+
+  </div><!-- /slide-wrap -->
+</div><!-- /app -->
+
+<script>
+  const LABELS = ['Title','Problem','Solution','How It Works','Pharmacy Tiers','Traction','Market','Ask'];
+  const total = 8;
+  let cur = 0;
+
+  const slides = document.querySelectorAll('.slide');
+  const counter = document.getElementById('counter');
+  const prevBtn = document.getElementById('prevBtn');
+  const nextBtn = document.getElementById('nextBtn');
+  const tabsEl  = document.getElementById('tabs');
+
+  // Build tabs
+  LABELS.forEach((l, i) => {
+    const btn = document.createElement('button');
+    btn.textContent = l;
+    if (i === 0) btn.classList.add('active');
+    btn.onclick = () => setSlide(i);
+    tabsEl.appendChild(btn);
+  });
+
+  function setSlide(n) {
+    slides[cur].classList.remove('active');
+    tabsEl.children[cur].classList.remove('active');
+    cur = Math.max(0, Math.min(total - 1, n));
+    slides[cur].classList.add('active');
+    tabsEl.children[cur].classList.add('active');
+    counter.textContent = (cur + 1) + ' / ' + total;
+    prevBtn.disabled = cur === 0;
+    nextBtn.disabled = cur === total - 1;
+  }
+
+  function go(dir) { setSlide(cur + dir); }
+
+  function toggleFS() {
+    if (!document.fullscreenElement) {
+      document.documentElement.requestFullscreen().catch(() => {});
+    } else {
+      document.exitFullscreen();
+    }
+  }
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'ArrowRight' || e.key === 'ArrowDown') go(1);
+    else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') go(-1);
+    else if (e.key === 'f' || e.key === 'F') toggleFS();
+  });
+
+  // Init
+  setSlide(0);
+</script>
+</body>
+</html>
